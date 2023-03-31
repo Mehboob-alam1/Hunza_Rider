@@ -34,7 +34,7 @@ public class AddVehicalActivity extends AppCompatActivity {
                     String number = binding.edittextModel.getText().toString();
                     String address = binding.edittextColor.getText().toString();
 
-                    startActivity(new Intent(AddVehicalActivity.this,DacumentActivity.class));
+                    startActivity(new Intent(AddVehicalActivity.this, DocumentActivity.class));
                 }
             }
         });

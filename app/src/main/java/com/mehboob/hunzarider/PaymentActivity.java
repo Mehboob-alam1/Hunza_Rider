@@ -19,7 +19,7 @@ public class PaymentActivity extends AppCompatActivity {
         binding.btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+startActivity(new Intent(PaymentActivity.this,DashboardActivity.class));
             }
         });
         binding.btnback.setOnClickListener(new View.OnClickListener() {

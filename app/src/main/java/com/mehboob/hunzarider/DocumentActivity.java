@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
-import com.mehboob.hunzarider.databinding.ActivityDacumentBinding;
+import com.mehboob.hunzarider.databinding.ActivityDocumentBinding;
 
-public class DacumentActivity extends AppCompatActivity {
-ActivityDacumentBinding binding;
+public class DocumentActivity extends AppCompatActivity {
+ActivityDocumentBinding binding;
 
     private static final int pickImage= 1;
     private static final int pickNic= 2;
@@ -21,14 +21,14 @@ ActivityDacumentBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityDacumentBinding.inflate(getLayoutInflater());
+        binding = ActivityDocumentBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
 
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DacumentActivity.this,PaymentActivity.class));
+                startActivity(new Intent(DocumentActivity.this,PaymentActivity.class));
             }
         });
         binding.btnback.setOnClickListener(new View.OnClickListener() {
