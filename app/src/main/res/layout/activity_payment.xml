@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddVehicalActivity">
+    tools:context=".PaymentActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
@@ -41,8 +41,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
 
-            android:fontFamily="@font/poppins"
-            android:text="Add Vehical"
+            android:text="Payment Details"
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -51,11 +50,45 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+
+            android:text="Bank"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittextBank"
+            android:layout_margin="3dp"
+android:background="@drawable/edittext_back"
+            android:hint="Enter bank name"
+            android:padding="10dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         android:padding="5dp"
@@ -68,59 +101,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
 
-            android:fontFamily="@font/poppins"
-            android:text="Type"
+            android:text="Name"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edittextType"
+            android:id="@+id/edittextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:background="@drawable/edittext_back"
 
-            android:fontFamily="@font/poppins"
-            android:hint="e,,g. Bike,car,Mazda,"
-            android:padding="10dp"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="3dp"
-
-            android:fontFamily="@font/poppins"
-            android:text="Brand"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/edittextBrand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@drawable/edittext_back"
-
-            android:fontFamily="@font/poppins"
-            android:hint="e,g. Honda, Toyota, Bmw "
+            android:hint="Enter your name"
             android:padding="10dp"
             android:textSize="14sp" />
     </LinearLayout>
@@ -130,76 +123,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="19dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-
-            android:fontFamily="@font/poppins"
-            android:text="Model"
+   android:fontFamily="@font/poppins"
+            android:text="Account no."
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edittextModel"
+            android:id="@+id/edittextAccountNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-
             android:background="@drawable/edittext_back"
-            android:fontFamily="@font/poppins"
 
-            android:hint="e,g 2011, 2013"
+            android:hint="e,g IBN0076372373673639879"
             android:inputType="number"
             android:padding="10dp"
             android:textSize="14sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-
-            android:fontFamily="@font/poppins"
-            android:text="Color"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/edittextColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@drawable/edittext_back"
-
-            android:fontFamily="@font/poppins"
-            android:hint="e,g black, white"
-            android:padding="10dp"
-            android:textSize="14sp" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout7"
@@ -207,24 +161,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/background_button"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/btnNext"
+            android:id="@+id/btnFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/next_arrow"
+
 
             android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins"
             android:padding="15dp"
-            android:text="Upload Documents"
+            android:text="Finish"
             android:textAlignment="center"
             android:textColor="@color/white" />
 
