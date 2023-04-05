@@ -18,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="12dp"
             android:elevation="10dp"
             app:cardCornerRadius="8dp"
@@ -103,15 +103,15 @@
                 android:padding="1dp"
                 android:text="Your Photo"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="Add Your  Photo"
-                android:textSize="12sp"
+                android:text="Add Your Photo"
+                android:textSize="10sp"
 
                 />
 
@@ -124,7 +124,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/back_upload"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_regular"
             android:text="Upload"
             android:textAllCaps="false"
             android:textColor="#53C858"
@@ -132,6 +132,23 @@
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout12" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnChangeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/back_upload"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Upload"
+            android:visibility="invisible"
+            android:backgroundTint="#FFEB3B"
+            android:textAllCaps="false"
+            android:textColor="#4CAF50"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout12" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,7 +206,7 @@
                 android:padding="1dp"
                 android:text="NIC"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -197,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Add Your  NIC front and back"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
 
@@ -211,7 +228,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/back_upload"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_regular"
             android:text="Upload"
             android:textAllCaps="false"
             android:textColor="#53C858"
@@ -276,7 +293,7 @@
                 android:padding="1dp"
                 android:text="Vehicle paper"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -284,7 +301,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Add Your vehicle documents"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
 
@@ -362,7 +379,7 @@
                 android:padding="1dp"
                 android:text="Driving License"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -370,7 +387,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Add Your driving license"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 />
 
@@ -383,7 +400,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/back_upload"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_regular"
             android:text="Upload"
             android:textAllCaps="false"
             android:textColor="#53C858"
@@ -413,7 +430,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/next_arrow"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_regular"
             android:drawablePadding="20dp"
             android:padding="15dp"
             android:text="Payment Details"

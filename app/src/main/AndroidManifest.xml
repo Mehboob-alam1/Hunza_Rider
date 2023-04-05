@@ -8,10 +8,26 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HunzaRider"
         tools:targetApi="31">
+
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyTheme"/>
+        <activity
+            android:name=".ContactActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyTheme"/>
+        <activity
+            android:name=".WithdrawActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyTheme">
+
+        </activity>
         <activity
             android:name=".DashboardActivity"
             android:exported="true"
@@ -24,22 +40,18 @@
             </intent-filter>
         </activity>
 
-
-
         <activity
             android:name=".OtpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".SignInActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme">
-
-        </activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".SignUpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".ProfileActivity"
             android:exported="true"
@@ -59,8 +71,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

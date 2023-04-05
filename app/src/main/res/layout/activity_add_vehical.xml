@@ -18,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="12dp"
             android:elevation="10dp"
             app:cardCornerRadius="8dp"
@@ -41,7 +41,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
 
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_medium"
             android:text="Add Vehicle"
             android:textColor="@color/black"
             android:textSize="22sp"

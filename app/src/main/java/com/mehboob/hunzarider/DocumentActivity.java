@@ -3,21 +3,30 @@ package com.mehboob.hunzarider;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.mehboob.hunzarider.databinding.ActivityDocumentBinding;
 
-public class DocumentActivity extends AppCompatActivity {
-ActivityDocumentBinding binding;
+import java.io.IOException;
 
-    private static final int pickImage= 1;
-    private static final int pickNic= 2;
-    private static final int pickVehicalPaper= 3;
-    private static final int pickDrivingLicence= 4;
+public class DocumentActivity extends AppCompatActivity {
+    ActivityDocumentBinding binding;
+
+    private static final int pickImage = 1;
+    private static final int requestPickImage = 1;
+    private static final int captureImage = 11;
+    private static final int pickNic = 2;
+    private static final int pickVehicalPaper = 3;
+    private static final int pickDrivingLicence = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,27 +34,26 @@ ActivityDocumentBinding binding;
 
         setContentView(binding.getRoot());
 
+
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DocumentActivity.this,PaymentActivity.class));
-            }
-        });
-        binding.btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
 
+                startActivity(new Intent(DocumentActivity.this, PaymentActivity.class));
             }
         });
+
 
         binding.btnUPloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 
-                startActivityForResult(intent,pickImage);
 
+                ImagePicker.with(DocumentActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start(pickImage);
 
             }
         });
@@ -54,18 +62,13 @@ ActivityDocumentBinding binding;
         binding.btnUlploadNic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                ImagePicker.with(DocumentActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start(pickNic);
 
-                startActivityForResult(intent,pickNic);
 
-
-            }
-        });
-
-        binding.btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 
@@ -73,9 +76,11 @@ ActivityDocumentBinding binding;
         binding.btnVehicalPaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-
-                startActivityForResult(intent,pickVehicalPaper);
+                ImagePicker.with(DocumentActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start(pickVehicalPaper);
 
 
             }
@@ -85,13 +90,17 @@ ActivityDocumentBinding binding;
         binding.btnDrivingLicence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 
-                startActivityForResult(intent,pickDrivingLicence);
+                ImagePicker.with(DocumentActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start(pickDrivingLicence );
 
 
             }
         });
+
 
         binding.btnback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,29 +110,27 @@ ActivityDocumentBinding binding;
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pickImage && resultCode == RESULT_OK && data != null)
-        {
 
-            Uri imageUri =  data.getData();
-            binding.uploadedImage.setImageURI(imageUri);
+
+        if (requestCode == 1 && data != null) {
+            Uri uri = data.getData();
+            binding.uploadedImage.setImageURI(uri);
+            Toast.makeText(this, "Image Seletedted ", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == 2 && data != null) {
+            Uri uri = data.getData();
+            binding.uploadNic.setImageURI(uri);
+        } else if (requestCode == 3 && data != null) {
+            Uri uri = data.getData();
+            binding.vehicalsPaper.setImageURI(uri);
+        } else {
+            Uri uri = data.getData();
+            binding.drivingLicence.setImageURI(uri);
         }
-        else if (requestCode == pickNic && resultCode == RESULT_OK && data != null)
-        {
-            Uri imageUri =  data.getData();
-            binding.uploadNic.setImageURI(imageUri);
-        }
-        else if (requestCode == pickVehicalPaper && resultCode == RESULT_OK && data != null)
-        {
-            Uri imageUri =  data.getData();
-            binding.vehicalsPaper.setImageURI(imageUri);
-        }
-        else
-        {
-            Uri imageUri =  data.getData();
-            binding.drivingLicence.setImageURI(imageUri);
-        }
+
+
     }
 }

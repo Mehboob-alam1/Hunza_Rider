@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,38 +43,51 @@ android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/textView15"
                 tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="16dp"
-                android:text="No"
-                android:textColor="#ED0E0E"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Yes"
-                android:textColor="#48CF4D"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2">
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView17"
-                app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+android:layout_weight="1"
+
+                    android:text="No"
+                    android:padding="10dp"
+                    android:textColor="#ED0E0E"
+                    />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:background="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent"
+
+                    android:text="Yes"
+                    android:textColor="#48CF4D"
+
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                 />
+
+
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
