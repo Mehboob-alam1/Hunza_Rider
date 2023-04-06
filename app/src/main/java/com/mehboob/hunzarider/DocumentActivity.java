@@ -21,9 +21,9 @@ public class DocumentActivity extends AppCompatActivity {
     ActivityDocumentBinding binding;
 
     private static final int pickImage = 1;
-    private static final int requestPickImage = 1;
-    private static final int captureImage = 11;
-    private static final int pickNic = 2;
+
+    private static final int pickNicFront = 2;
+    private static final int pickNicBack = 21;
     private static final int pickVehicalPaper = 3;
     private static final int pickDrivingLicence = 4;
 
@@ -35,13 +35,12 @@ public class DocumentActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(DocumentActivity.this, PaymentActivity.class));
-            }
-        });
+//        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
         binding.btnUPloadImage.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +65,19 @@ public class DocumentActivity extends AppCompatActivity {
                         .crop()
                         .compress(1024)
                         .maxResultSize(1080, 1080)
-                        .start(pickNic);
+                        .start(pickNicFront);
 
+
+            }
+        });
+        binding.btnUlploadNicBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(DocumentActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start(pickNicBack);
 
             }
         });
@@ -108,6 +118,14 @@ public class DocumentActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        binding.linearLayoutPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DocumentActivity.this, PaymentActivity.class));
+
+            }
+        });
     }
 
 
@@ -126,7 +144,14 @@ public class DocumentActivity extends AppCompatActivity {
         } else if (requestCode == 3 && data != null) {
             Uri uri = data.getData();
             binding.vehicalsPaper.setImageURI(uri);
-        } else {
+        }
+        else if (requestCode == pickNicBack && data != null)
+        {
+            Uri uri = data.getData();
+            binding.uploadNicBack.setImageURI(uri);
+        }
+
+        else {
             Uri uri = data.getData();
             binding.drivingLicence.setImageURI(uri);
         }

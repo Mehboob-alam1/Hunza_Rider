@@ -17,10 +17,20 @@ ActivityOtpBinding binding;
         binding = ActivityOtpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        String number = getIntent().getStringExtra("number");
+        binding.textViewNumber.setText(number);
         binding.btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OtpActivity.this,ProfileActivity.class));
+            }
+        });
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

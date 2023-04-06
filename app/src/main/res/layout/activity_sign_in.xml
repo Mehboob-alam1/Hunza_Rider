@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="@string/sign_up_with_your_phone_number"
+     android:text="@string/sign_in_with_your_phone_number"
         android:textColor="#090909"
         android:textSize="15sp"
         android:textStyle="bold"

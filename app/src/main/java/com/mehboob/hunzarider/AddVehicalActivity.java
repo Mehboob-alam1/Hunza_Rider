@@ -18,7 +18,8 @@ public class AddVehicalActivity extends AppCompatActivity {
         binding = ActivityAddVehicalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+        binding.linearLayoutDocument
+                .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

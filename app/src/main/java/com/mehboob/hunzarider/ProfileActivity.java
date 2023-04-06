@@ -18,7 +18,7 @@ ActivityProfileBinding binding;
 
         setContentView(binding.getRoot());
 
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+        binding.linearLayoutAddVehical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -58,7 +58,7 @@ ActivityProfileBinding binding;
         binding.btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAffinity();
 
             }
         });

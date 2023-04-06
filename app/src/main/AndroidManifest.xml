@@ -38,6 +38,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity
@@ -63,14 +64,22 @@
         <activity
             android:name=".DocumentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" />
+            android:theme="@style/Theme.MyTheme" >
+
+        </activity>
         <activity
             android:name=".PaymentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" />
+            android:theme="@style/Theme.MyTheme" >
+
+
+        </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.MyTheme">
+
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

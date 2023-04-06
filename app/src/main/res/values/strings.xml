@@ -15,11 +15,16 @@ Let’s make your day great with Hunza Bikeya!</string>
 
     <string name="privacy_policy">Privacy Policy!</string>
     <string name="please_enter_a_valid_mobile_number">*Please enter a valid mobile number</string>
+    <string name="please_enter_a_mobile_number">*Please enter a  mobile number</string>
     <string name="connect">Connect</string>
     <string name="_03xxxxxxxx">03XXXXXXXX</string>
     <string name="enter_your_contact_number">Enter your Contact Number</string>
     <string name="sign_up_with_your_phone_number">Sign up with your phone number</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum_is_a_placeholder_text_commonly_used_to_demonstrate_the_visual_form_of_a_document_or_a_typeface_without_relying_on_meaningful_content_lorem_ipsum_may_be_used_as_a_placeholder_before_final_copy_is_available">Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</string>
+    <string name="sign_in_with_your_phone_number">Sign in with your phone number</string>
 </resources>

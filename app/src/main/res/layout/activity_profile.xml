@@ -8,11 +8,11 @@
 
 
     <LinearLayout
-    android:id="@id/linearLayout2"
+        android:id="@id/linearLayout2"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,11 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
-            android:fontFamily="@font/poppins_semibold"
             android:text="Create your Profile"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+
+            style="@style/heading_style" />
     </LinearLayout>
 
     <LinearLayout
@@ -283,7 +281,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayoutAddVehical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -302,14 +300,10 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/next_arrow"
 
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins"
-            android:padding="15dp"
             android:text="Add Vehicals"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
+
+            style="@style/button_next_style" />
 
 
     </LinearLayout>

@@ -42,12 +42,14 @@ ActivitySignUpBinding binding;
 
         else
         {
-//            String countryCode=      binding.ccp.getSelectedCountryCode();
+
             String number = binding.edittextNumber.getText().toString();
-//            String phoneNumber = "+"+countryCode+number;
-//            Intent intent = new Intent(SignUpActivity.this,OtpActivity.class);
-//            intent.putExtra("number",number);
-//            startActivity(intent);
+
+
+
+            Intent intent = new Intent(SignUpActivity.this,OtpActivity.class);
+            intent.putExtra("number",number);
+            startActivity(intent);
 
         }
     }

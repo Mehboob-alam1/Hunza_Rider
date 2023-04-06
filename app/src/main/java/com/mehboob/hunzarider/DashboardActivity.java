@@ -44,10 +44,11 @@ public class DashboardActivity extends AppCompatActivity {
                 {
                     case R.id.bottom_home:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new HomeFragment()).commit();
+                     appbarView.setVisibility(View.VISIBLE);
                         break;
                     case R.id.bottom_booking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new BookingFragment()).commit();
-                      appbarView.setVisibility(View.INVISIBLE);
+                          appbarView.setVisibility(View.VISIBLE);
                         break;
                     case R.id.bottom_wallet:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new WalletFragment()).commit();
@@ -55,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
                         break;
                     case R.id.bottom_notification:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new NotificationsFragment()).commit();
-                        appbarView.setVisibility(View.GONE);
+//                        appbarView.setVisibility(View.GONE);
                        break;
                     case R.id.bottom_account:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new AccountFragment()).commit();
@@ -98,12 +99,14 @@ public class DashboardActivity extends AppCompatActivity {
                     case R.id.nav_about:
                         startActivity(new Intent(DashboardActivity.this,AboutActivity.class));
                         binding.drawerLayout.closeDrawer(GravityCompat.START);
-                        binding.bottomNavigation.setSelectedItemId(R.id.bottom_wallet);
+                        binding.bottomNavigation.setSelectedItemId(R.id.bottom_home);
+                        break;
 
                     case R.id.nav_contact:
                         startActivity(new Intent(DashboardActivity.this,ContactActivity.class));
                         binding.drawerLayout.closeDrawer(GravityCompat.START);
-                        binding.bottomNavigation.setSelectedItemId(R.id.bottom_wallet);
+                        binding.bottomNavigation.setSelectedItemId(R.id.bottom_home);
+                        break;
 
 
                 }

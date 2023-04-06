@@ -40,11 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
-            android:fontFamily="@font/poppins"
+
             android:text="Documents"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            style="@style/heading_style"
+           />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,7 +164,7 @@
 
 
         <ImageView
-            android:id="@+id/imagviewNicBack"
+            android:id="@+id/imagviewNicfront"
             android:layout_width="50dp"
             android:layout_height="50dp"
 
@@ -182,10 +181,10 @@
             android:layout_height="30dp"
             android:id="@+id/uploadNic"
             android:src="@drawable/cnic"
-            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicBack"
-            app:layout_constraintEnd_toEndOf="@+id/imagviewNicBack"
-            app:layout_constraintStart_toStartOf="@+id/imagviewNicBack"
-            app:layout_constraintTop_toTopOf="@+id/imagviewNicBack" />
+            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicfront"
+            app:layout_constraintEnd_toEndOf="@+id/imagviewNicfront"
+            app:layout_constraintStart_toStartOf="@+id/imagviewNicfront"
+            app:layout_constraintTop_toTopOf="@+id/imagviewNicfront" />
 
         <LinearLayout
             android:id="@+id/linearLayout101"
@@ -194,17 +193,17 @@
             android:layout_marginStart="18dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicBack"
+            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicfront"
             app:layout_constraintEnd_toStartOf="@+id/btnUlploadNic"
-            app:layout_constraintStart_toEndOf="@+id/imagviewNicBack"
-            app:layout_constraintTop_toTopOf="@+id/imagviewNicBack">
+            app:layout_constraintStart_toEndOf="@+id/imagviewNicfront"
+            app:layout_constraintTop_toTopOf="@+id/imagviewNicfront">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:padding="1dp"
-                android:text="NIC"
+                android:text="NIC Front"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -238,6 +237,95 @@
             app:layout_constraintTop_toTopOf="@+id/linearLayout101" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout41"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/layout_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+
+        <ImageView
+            android:id="@+id/imagviewNicBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/imagview_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/uploadNicBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/cnic"
+            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicBack"
+            app:layout_constraintEnd_toEndOf="@+id/imagviewNicBack"
+            app:layout_constraintStart_toStartOf="@+id/imagviewNicBack"
+            app:layout_constraintTop_toTopOf="@+id/imagviewNicBack" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1011"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/imagviewNicBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnUlploadNicBack"
+            app:layout_constraintStart_toEndOf="@+id/imagviewNicBack"
+            app:layout_constraintTop_toTopOf="@+id/imagviewNicBack">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:padding="1dp"
+                android:text="NIC Back"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Add Your  NIC front and back"
+                android:textSize="10sp"
+
+                />
+
+
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUlploadNicBack"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/back_upload"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textColor="#53C858"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout1011"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout1011" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
@@ -248,7 +336,7 @@
         android:background="@drawable/layout_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout41">
 
 
         <ImageView
@@ -265,9 +353,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/vehicalsPaper"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/vehicalsPaper"
             android:src="@drawable/vehicle_paper"
             app:layout_constraintBottom_toBottomOf="@+id/imageviewVehicalPaper"
             app:layout_constraintEnd_toEndOf="@+id/imageviewVehicalPaper"
@@ -331,7 +419,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-          android:background="@drawable/layout_background"
+        android:background="@drawable/layout_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
@@ -351,9 +439,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/drivingLicence"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/drivingLicence"
             android:src="@drawable/driving_licence"
             app:layout_constraintBottom_toBottomOf="@+id/imageviewLicence"
             app:layout_constraintEnd_toEndOf="@+id/imageviewLicence"
@@ -412,7 +500,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayoutPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -429,13 +517,8 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/next_arrow"
-            android:fontFamily="@font/poppins_regular"
-            android:drawablePadding="20dp"
-            android:padding="15dp"
             android:text="Payment Details"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
+         style="@style/button_next_style" />
 
 
     </LinearLayout>

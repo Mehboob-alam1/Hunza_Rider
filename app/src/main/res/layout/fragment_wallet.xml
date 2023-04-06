@@ -113,6 +113,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:background="@drawable/back_upload"
             android:fontFamily="@font/poppins_semibold"
             android:text="Withdraw"

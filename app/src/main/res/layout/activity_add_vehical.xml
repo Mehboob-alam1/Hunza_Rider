@@ -41,11 +41,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
 
-            android:fontFamily="@font/poppins_medium"
+
             android:text="Add Vehicle"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            style="@style/heading_style"
+          />
     </LinearLayout>
 
 
@@ -79,12 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:background="@drawable/edittext_back"
-
-            android:fontFamily="@font/poppins"
             android:hint="e,,g. Bike,car,Mazda,"
-            android:padding="10dp"
-            android:textSize="14sp" />
+
+            style="@style/name_edittext_style" />
     </LinearLayout>
 
     <LinearLayout
@@ -119,10 +115,8 @@
             android:layout_margin="3dp"
             android:background="@drawable/edittext_back"
 
-            android:fontFamily="@font/poppins"
             android:hint="e,g. Honda, Toyota, Bmw "
-            android:padding="10dp"
-            android:textSize="14sp" />
+         style="@style/name_edittext_style"  />
     </LinearLayout>
 
     <LinearLayout
@@ -156,12 +150,11 @@
             android:layout_margin="3dp"
 
             android:background="@drawable/edittext_back"
-            android:fontFamily="@font/poppins"
+        style="@style/name_edittext_style"
 
             android:hint="e,g 2011, 2013"
             android:inputType="number"
-            android:padding="10dp"
-            android:textSize="14sp" />
+          />
     </LinearLayout>
 
     <LinearLayout
@@ -194,15 +187,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:background="@drawable/edittext_back"
-
-            android:fontFamily="@font/poppins"
+style="@style/name_edittext_style"
             android:hint="e,g black, white"
-            android:padding="10dp"
-            android:textSize="14sp" />
+         />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayoutDocument"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -219,14 +210,10 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/next_arrow"
-
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins"
-            android:padding="15dp"
             android:text="Upload Documents"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
+
+
+        style="@style/button_next_style" />
 
 
     </LinearLayout>
