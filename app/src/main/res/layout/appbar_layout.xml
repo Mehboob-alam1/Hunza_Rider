@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="#EDE9E9"
-    android:id="@+id/appbar">
+    android:id="@+id/appbarLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,7 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/nav_menu"
             android:text="Online"
+            android:fontFamily="@font/poppins_regular"
             android:textStyle="bold"
+            android:textSize="14sp"
             android:textColor="#5DDA62"
             app:layout_constraintBottom_toBottomOf="@+id/nav_menu"
             app:layout_constraintEnd_toStartOf="@+id/switch1"

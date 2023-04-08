@@ -13,6 +13,10 @@ Let’s make your day great with Hunza Bikeya!</string>
     <string name="frame4Heading">Let’s Start</string>
 
 
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+
     <string name="privacy_policy">Privacy Policy!</string>
     <string name="please_enter_a_valid_mobile_number">*Please enter a valid mobile number</string>
     <string name="please_enter_a_mobile_number">*Please enter a  mobile number</string>

@@ -1,21 +1,16 @@
-package com.mehboob.hunzarider;
+package com.mehboob.hunzarider.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.mehboob.hunzarider.databinding.ActivityDocumentBinding;
-
-import java.io.IOException;
 
 public class DocumentActivity extends AppCompatActivity {
     ActivityDocumentBinding binding;

@@ -1,4 +1,4 @@
-package com.mehboob.hunzarider;
+package com.mehboob.hunzarider.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mehboob.hunzarider.R;
 import com.mehboob.hunzarider.databinding.ActivityWithdrawBinding;
 
 public class WithdrawActivity extends AppCompatActivity {

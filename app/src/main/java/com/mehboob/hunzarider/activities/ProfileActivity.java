@@ -1,7 +1,8 @@
-package com.mehboob.hunzarider;
+package com.mehboob.hunzarider.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +12,15 @@ import com.mehboob.hunzarider.databinding.ActivityProfileBinding;
 
 public class ProfileActivity extends AppCompatActivity {
 ActivityProfileBinding binding;
+ProgressDialog progressDialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding =ActivityProfileBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+
+        progressDialog = new ProgressDialog(this);
 
         binding.linearLayoutAddVehical.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +38,13 @@ ActivityProfileBinding binding;
                     String number = binding.edittextPhoneNumber.getText().toString();
                     String address = binding.edittextAddress.getText().toString();
 
-                    startActivity(new Intent(ProfileActivity.this,AddVehicalActivity.class));
+
+                    progressDialog.setTitle("Signing in");
+                    progressDialog.setMessage("PLease Wait");
+                    progressDialog.setCancelable(false);
+                    progressDialog.dismiss();
+
+                    startActivity(new Intent(ProfileActivity.this, AddVehicalActivity.class));
                 }
             }
         });
@@ -59,8 +69,15 @@ ActivityProfileBinding binding;
             @Override
             public void onClick(View v) {
                 finishAffinity();
+                progressDialog.dismiss();
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        progressDialog.dismiss();
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardActivity">
+    tools:context=".activities.DashboardActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
     <include
         android:id="@+id/appBar"
         layout="@layout/appbar_layout"
-        android:visibility="visible" />
+ />
 
     <FrameLayout
         android:id="@+id/frameContainer"
@@ -45,7 +45,7 @@
      <com.google.android.material.navigation.NavigationView
          android:layout_width="wrap_content"
          android:layout_height="match_parent"
-         android:id="@+id/navigationDrawer"
+         android:id="@+id/navigation_view"
 app:headerLayout="@layout/header_layout"
          android:layout_gravity="start"
          app:itemIconTint="#0CAA0D"

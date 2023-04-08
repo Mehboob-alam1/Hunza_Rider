@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mehboob.hunzarider.WithdrawActivity;
+import com.mehboob.hunzarider.activities.WithdrawActivity;
 
 import com.mehboob.hunzarider.databinding.FragmentWalletBinding;
 

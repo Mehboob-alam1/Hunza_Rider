@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "751086108435",
+    "project_id": "hunza-rider",
+    "storage_bucket": "hunza-rider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751086108435:android:8560e2505371029d5224e6",
+        "android_client_info": {
+          "package_name": "com.mehboob.hunzarider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751086108435-sps9usn9bg638td3cegb0irj5ud4jgvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcHwL61kvUpQpJVJtCdMPres31LsJUnp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751086108435-sps9usn9bg638td3cegb0irj5ud4jgvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

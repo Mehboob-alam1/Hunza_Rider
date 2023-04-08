@@ -1,8 +1,6 @@
 package com.mehboob.hunzarider.fragments;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mehboob.hunzarider.R;
-import com.mehboob.hunzarider.SignInActivity;
+import com.mehboob.hunzarider.activities.SignInActivity;
 import com.mehboob.hunzarider.databinding.FragmentAccountBinding;
 
 public class AccountFragment extends Fragment {

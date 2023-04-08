@@ -1,4 +1,4 @@
-package com.mehboob.hunzarider;
+package com.mehboob.hunzarider.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
