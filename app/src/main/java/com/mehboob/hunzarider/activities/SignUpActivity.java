@@ -29,6 +29,9 @@ FirebaseAuth firebaseAuth;
         setContentView(binding.getRoot());
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Sending Otp");
+        progressDialog.setMessage("PLease Wait");
+        progressDialog.setCancelable(false);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser()!=null)
         {
@@ -69,9 +72,7 @@ FirebaseAuth firebaseAuth;
         else
         {
 
-            progressDialog.setTitle("Sending Otp");
-            progressDialog.setMessage("PLease Wait");
-            progressDialog.setCancelable(false);
+
             progressDialog.show();
             String number = binding.edittextNumber.getText().toString();
 
@@ -85,12 +86,13 @@ FirebaseAuth firebaseAuth;
 
                         @Override
                         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                            progressDialog.dismiss();
+
 
                             Intent intent = new Intent(SignUpActivity.this,OtpActivity.class);
                             intent.putExtra("verificationID" ,s);
                             intent.putExtra("number"+92,number);
                             startActivity(intent);
+
                         }
 
                         @Override
@@ -98,7 +100,7 @@ FirebaseAuth firebaseAuth;
 
                             Log.d("Exception",e.getMessage());
                             progressDialog.dismiss();
-                            Toast.makeText(SignUpActivity.this, "no send", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });

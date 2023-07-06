@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "751086108435",
-    "project_id": "hunza-rider",
-    "storage_bucket": "hunza-rider.appspot.com"
+    "project_number": "114764797676",
+    "project_id": "hunza-bykea-c0ca9",
+    "storage_bucket": "hunza-bykea-c0ca9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:751086108435:android:8560e2505371029d5224e6",
+        "mobilesdk_app_id": "1:114764797676:android:b57c2bfdf74f75b20ef7c9",
         "android_client_info": {
           "package_name": "com.mehboob.hunzarider"
         }
       },
       "oauth_client": [
         {
-          "client_id": "751086108435-sps9usn9bg638td3cegb0irj5ud4jgvf.apps.googleusercontent.com",
+          "client_id": "114764797676-iimanrcrapt7a5shji55ki7hhh9ahgl2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBcHwL61kvUpQpJVJtCdMPres31LsJUnp4"
+          "current_key": "AIzaSyAS1I-4GxM9yY_oEQXmL_iVtmmdpADH9O8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "751086108435-sps9usn9bg638td3cegb0irj5ud4jgvf.apps.googleusercontent.com",
+              "client_id": "114764797676-iimanrcrapt7a5shji55ki7hhh9ahgl2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
