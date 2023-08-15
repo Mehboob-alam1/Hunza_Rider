@@ -11,11 +11,11 @@ provide professional taxi services for you.</string>
     <string name="frame4description">Your satisfaction is our number one priority
 Let’s make your day great with Hunza Bikeya!</string>
     <string name="frame4Heading">Let’s Start</string>
-
-
+    <string name="user_location_permission_not_granted">User not allowed the permissions</string>
+    <string name="location_dialog_desc">We need access to your\n location to be able to use\n this service</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-
+    <string name="mapbox_access_token">sk.eyJ1IjoiYmFpZ3VsbGFoNDQiLCJhIjoiY2xobTg3cWl4MDQzcTNkbmc4M29jamV1eCJ9.UaBdqZyxWMLD_R3-liX4ZQ</string>
 
     <string name="privacy_policy">Privacy Policy!</string>
     <string name="please_enter_a_valid_mobile_number">*Please enter a valid mobile number</string>

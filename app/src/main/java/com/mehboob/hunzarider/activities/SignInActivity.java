@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.hunzarider.databinding.ActivitySignInBinding;
 
 import java.util.zip.ZipException;
@@ -51,7 +52,7 @@ ProgressDialog progressDialog;
 
 
 
-                    startActivity(new Intent(SignInActivity.this, ProfileActivity.class));
+                    startActivity(new Intent(SignInActivity.this, DashboardActivity.class));
 
 
 
@@ -59,6 +60,15 @@ ProgressDialog progressDialog;
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() !=null){
+            startActivity(new Intent(SignInActivity.this, DashboardActivity.class));
+        }
     }
 
     @Override

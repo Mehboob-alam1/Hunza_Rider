@@ -17,27 +17,29 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.mehboob.hunzarider.databinding.ActivityOtpBinding;
+import com.mehboob.hunzarider.utils.SharedPref;
 
 import in.aabhasjindal.otptextview.OTPListener;
 
 public class OtpActivity extends AppCompatActivity {
 
-ActivityOtpBinding binding;
+    ActivityOtpBinding binding;
 
 
-    String number;
-    FirebaseAuth firebaseAuth;
-    String OTPID;
-    String verificatonID;
-    PhoneAuthProvider.ForceResendingToken ResendToken;
+    private String number;
+    private FirebaseAuth firebaseAuth;
+    private String OTPID;
+    private String verificatonID;
+    private PhoneAuthProvider.ForceResendingToken ResendToken;
+
+    private SharedPref sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityOtpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-
+        sharedPref = new SharedPref(this);
         firebaseAuth = FirebaseAuth.getInstance();
         number = (getIntent().getStringExtra("number"));
         verificatonID = getIntent().getStringExtra("verificationID");
@@ -68,10 +70,9 @@ ActivityOtpBinding binding;
         });
 
 
+        OtpListner();
 
-OtpListner();
-
-      new CountDownTimer(30000, 1000) {
+        new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -109,7 +110,7 @@ OtpListner();
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
+                                sharedPref.saveUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 startActivity(new Intent(OtpActivity.this, ProfileActivity.class));
 
                             } else {

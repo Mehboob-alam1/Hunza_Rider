@@ -13,24 +13,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HunzaRider"
         tools:targetApi="31">
-<activity android:name=".activities.BoardingActivity"
-    android:exported="true"
-    android:theme="@style/Theme.MyTheme">
 
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-</activity>
+        <activity
+            android:name=".activities.BoardingActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+
+        </activity>
         <activity
             android:name=".activities.AboutActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyTheme"/>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.ContactActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyTheme"/>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.WithdrawActivity"
             android:exported="true"
@@ -40,11 +45,7 @@
         <activity
             android:name=".activities.DashboardActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"
-            >
-
-
-
+            android:theme="@style/Theme.MyTheme">
 
 
         </activity>
@@ -52,24 +53,21 @@
         <activity
             android:name=".activities.OtpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"
-            >
-
+            android:theme="@style/Theme.MyTheme">
 
 
         </activity>
         <activity
             android:name=".activities.SignInActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" >
-
-
+            android:theme="@style/Theme.MyTheme">
 
         </activity>
+
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.MyTheme">
 
         </activity>
         <activity
@@ -83,13 +81,13 @@
         <activity
             android:name=".activities.DocumentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.MyTheme">
 
         </activity>
         <activity
             android:name=".activities.PaymentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.MyTheme">
 
 
         </activity>

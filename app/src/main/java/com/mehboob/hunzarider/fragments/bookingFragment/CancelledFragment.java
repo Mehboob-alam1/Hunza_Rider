@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.mehboob.hunzarider.databinding.FragmentCancelledBinding;
 
 public class CancelledFragment extends Fragment {
-FragmentCancelledBinding binding;
+private FragmentCancelledBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,4 +24,6 @@ FragmentCancelledBinding binding;
 
         return binding.getRoot();
     }
+
+
 }

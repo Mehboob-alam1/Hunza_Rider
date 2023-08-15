@@ -2,18 +2,27 @@ package com.mehboob.hunzarider.models;
 
 public class ProfileDetailsClass {
 
-    String userName,UserEmail,userPhoneNumber,  userAddress;
+   private String userName,UserEmail,userPhoneNumber,  userAddress;
+    private String userId;
 
-    public ProfileDetailsClass(String userName, String userEmail, String userPhoneNumber, String userAddress) {
+    public ProfileDetailsClass(String userName, String userEmail, String userPhoneNumber, String userAddress, String userId) {
         this.userName = userName;
         UserEmail = userEmail;
         this.userPhoneNumber = userPhoneNumber;
         this.userAddress = userAddress;
+        this.userId = userId;
     }
 
     public ProfileDetailsClass() {
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;

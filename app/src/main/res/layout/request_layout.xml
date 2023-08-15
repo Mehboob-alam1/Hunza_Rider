@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/driverImage"
+                    android:id="@+id/userImage"
                     android:layout_width="40dp"
 
                     android:layout_height="40dp"
@@ -49,43 +49,41 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/driverName"
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/poppins"
-                    android:text="Karim Khan"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/driverImage"
-                    app:layout_constraintTop_toTopOf="@+id/driverImage" />
+                    app:layout_constraintStart_toEndOf="@+id/userImage"
+                    app:layout_constraintTop_toTopOf="@+id/userImage" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="24dp"
                     android:fontFamily="@font/poppins"
 
                     android:text="PKR:"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/distance"
-                    app:layout_constraintEnd_toStartOf="@+id/driverPrice"
-                    app:layout_constraintTop_toTopOf="@+id/driverPrice" />
+                    app:layout_constraintBottom_toTopOf="@+id/txtDistance"
+                    app:layout_constraintEnd_toStartOf="@+id/txtPrice"
+                    app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 
                 <TextView
-                    android:id="@+id/driverPrice"
+                    android:id="@+id/txtPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:text="13,000"
+                    android:text=""
 
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -94,19 +92,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/distance"
+                    android:id="@+id/txtDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
 
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
-                    android:text="2.2km"
+                    android:text=""
                     android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.272"
                     app:layout_constraintStart_toStartOf="@+id/textView14"
-                    app:layout_constraintTop_toBottomOf="@+id/driverPrice" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,11 +149,12 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtPickUpLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Japan chok karimabad"
+                        android:text=""
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -213,11 +212,12 @@
                         android:textStyle="bold" />
 
                     <TextView
+                      android:id="@+id/txtDropLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Aliabad collage road"
+                        android:text=""
                         android:textSize="12sp" />
 
                 </LinearLayout>

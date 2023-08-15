@@ -1,16 +1,26 @@
 package com.mehboob.hunzarider.models;
 
 public class VehicleDetailsClass {
-    String vehicleType,vehicleBrand,vehicleModel,vehicleColor;
+   private String vehicleType,vehicleBrand,vehicleModel,vehicleColor;
+    private String userId;
 
-    public VehicleDetailsClass(String vehicleType, String vehicleBrand, String vehicleModel, String vehicleColor) {
+    public VehicleDetailsClass(String vehicleType, String vehicleBrand, String vehicleModel, String vehicleColor, String userId) {
         this.vehicleType = vehicleType;
         this.vehicleBrand = vehicleBrand;
         this.vehicleModel = vehicleModel;
         this.vehicleColor = vehicleColor;
+        this.userId = userId;
     }
 
     public VehicleDetailsClass() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getVehicleType() {

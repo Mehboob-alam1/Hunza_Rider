@@ -11,6 +11,7 @@ public class SharedPref {
     private static final String NIC_BACK = "nic_back";
     private static final String VEHICLE_PAPER = "vehicle_paper";
     private static final String DRIVING_LICENSE = "driving_license";
+    private static final String USER_ID="user_id";
 
     public SharedPref(Context context) {
         sharedPreferences = context.getSharedPreferences(MY_PHOTO_URI, Context.MODE_PRIVATE);
@@ -23,7 +24,16 @@ public class SharedPref {
         editor.putString(MY_PHOTO_URI,photo.toString());
         editor.apply();
     }
+    public void saveUID(String  userId){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
 
+        editor.putString(USER_ID,userId);
+        editor.apply();
+    }
+    public String fetchUserId(){
+
+        return sharedPreferences.getString(USER_ID,"");
+    }
     public String fetchMyPhoto(){
 
         return sharedPreferences.getString(MY_PHOTO_URI,"");

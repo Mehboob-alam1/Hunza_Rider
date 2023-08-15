@@ -50,7 +50,7 @@ private DatabaseReference mRef;
                     progressDialog.setCancelable(false);
 
 
-                    mRef.child(Constants.RIDER_PROFILE).child(Constants.USER_ID).setValue(new ProfileDetailsClass(name,email,number,address))
+                    mRef.child(Constants.RIDER_PROFILE).child(Constants.USER_ID).setValue(new ProfileDetailsClass(name,email,number,address,Constants.USER_ID))
                             .addOnCompleteListener(task -> {
                                 if (task.isComplete() && task.isSuccessful()){
                                     progressDialog.dismiss();

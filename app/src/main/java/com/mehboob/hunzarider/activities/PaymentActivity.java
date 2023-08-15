@@ -2,6 +2,7 @@ package com.mehboob.hunzarider.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,25 +18,28 @@ public class PaymentActivity extends AppCompatActivity {
 
     ActivityPaymentBinding binding;
     private DatabaseReference mRef;
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.BANK_DETAILS).child(Constants.USER_ID);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait....");
+        mProgressDialog.setCancelable(false);
+        mRef = FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.BANK_DETAILS).child(Constants.USER_ID);
         binding.btnFinish.setOnClickListener(v -> {
 
 
             if (binding.edittextBank.getText().toString().isEmpty() || binding.edittextName.getText().toString().isEmpty()
-            || binding.edittextAccountNo.getText().toString().isEmpty())
-            {
+                    || binding.edittextAccountNo.getText().toString().isEmpty()) {
 
                 binding.edittextBank.setError("Enter Bank Name");
                 binding.edittextName.setError("Enter Your Name");
                 binding.edittextAccountNo.setError("Enter Your Account No.");
-            }
-            else {
-                uploadBankDetail(binding.edittextBank.getText().toString(),binding.edittextName.getText().toString(),binding.edittextAccountNo.getText().toString());
+            } else {
+                uploadBankDetail(binding.edittextBank.getText().toString(), binding.edittextName.getText().toString(), binding.edittextAccountNo.getText().toString());
 
 
             }
@@ -44,15 +48,17 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void uploadBankDetail(String bankName, String name, String accountNumber) {
-        PaymentDetailClass paymentDetail = new PaymentDetailClass(bankName,name,accountNumber);
-
+        PaymentDetailClass paymentDetail = new PaymentDetailClass(bankName, name, accountNumber,Constants.USER_ID);
+        mProgressDialog.show();
         mRef.setValue(paymentDetail).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 Toast.makeText(this, "Bank details added ", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(PaymentActivity.this,DashboardActivity.class));
+                mProgressDialog.dismiss();
+                startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
             }
         }).addOnFailureListener(e -> {
-            Toast.makeText(this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            mProgressDialog.dismiss();
+            Toast.makeText(this, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 }

@@ -55,7 +55,7 @@ public class DocumentActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sharedPref = new SharedPref(this);
         storageReference = FirebaseStorage.getInstance().getReference(Constants.DOCUMENTS).child(Constants.USER_ID);
-        mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.BANK_DETAILS).child(Constants.USER_ID);
+        mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.DOCUMENTS).child(Constants.USER_ID);
         urlStrings = new ArrayList<>();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Uploading Documents");
@@ -63,100 +63,56 @@ public class DocumentActivity extends AppCompatActivity {
         mProgressDialog.setMessage("Please wait......");
         setImgs();
 
-        binding.btnUPloadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnUPloadImage.setOnClickListener(v -> ImagePicker.with(DocumentActivity.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start(pickImage));
 
 
-                ImagePicker.with(DocumentActivity.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080, 1080)
-                        .start(pickImage);
+        binding.btnUlploadNic.setOnClickListener(v -> ImagePicker.with(DocumentActivity.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start(pickNicFront));
+        binding.btnUlploadNicBack.setOnClickListener(v -> ImagePicker.with(DocumentActivity.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start(pickNicBack));
 
+
+        binding.btnVehicalPaper.setOnClickListener(v -> ImagePicker.with(DocumentActivity.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start(pickVehicalPaper));
+
+
+        binding.btnDrivingLicence.setOnClickListener(v -> ImagePicker.with(DocumentActivity.this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start(pickDrivingLicence));
+
+
+        binding.btnback.setOnClickListener(v -> finish());
+
+        binding.linearLayoutPayment.setOnClickListener(v -> {
+            if (sharedPref.fetchMyPhoto() == " ") {
+                Toast.makeText(DocumentActivity.this, "Your Image not added ", Toast.LENGTH_SHORT).show();
+            } else if (sharedPref.fetchNicFront() == " ") {
+                Toast.makeText(DocumentActivity.this, "Add your cnic front", Toast.LENGTH_SHORT).show();
+            } else if (sharedPref.fetchNicBack() == " ") {
+                Toast.makeText(DocumentActivity.this, "Add your cnic back", Toast.LENGTH_SHORT).show();
+            } else if (sharedPref.fetchVehiclePaper() == " ") {
+                Toast.makeText(DocumentActivity.this, "Vehicle papers are not added", Toast.LENGTH_SHORT).show();
+            } else if (sharedPref.fetchDrivingLicense() == " " ) {
+                Toast.makeText(DocumentActivity.this, "Driving license is not added", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadDocuments(Uri.parse(sharedPref.fetchMyPhoto()), Uri.parse(sharedPref.fetchNicFront()), Uri.parse(sharedPref.fetchNicBack()), Uri.parse(sharedPref.fetchVehiclePaper()), Uri.parse(sharedPref.fetchDrivingLicense()));
             }
-        });
 
-
-        binding.btnUlploadNic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePicker.with(DocumentActivity.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080, 1080)
-                        .start(pickNicFront);
-
-
-            }
-        });
-        binding.btnUlploadNicBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePicker.with(DocumentActivity.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080, 1080)
-                        .start(pickNicBack);
-
-            }
-        });
-
-
-        binding.btnVehicalPaper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePicker.with(DocumentActivity.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080, 1080)
-                        .start(pickVehicalPaper);
-
-
-            }
-        });
-
-
-        binding.btnDrivingLicence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ImagePicker.with(DocumentActivity.this)
-                        .crop()
-                        .compress(1024)
-                        .maxResultSize(1080, 1080)
-                        .start(pickDrivingLicence);
-
-
-            }
-        });
-
-
-        binding.btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        binding.linearLayoutPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sharedPref.fetchMyPhoto() == " ") {
-                    Toast.makeText(DocumentActivity.this, "Your Image not added ", Toast.LENGTH_SHORT).show();
-                } else if (sharedPref.fetchNicFront() == " ") {
-                    Toast.makeText(DocumentActivity.this, "Add your cnic front", Toast.LENGTH_SHORT).show();
-                } else if (sharedPref.fetchNicBack() == " ") {
-                    Toast.makeText(DocumentActivity.this, "Add your cnic back", Toast.LENGTH_SHORT).show();
-                } else if (sharedPref.fetchVehiclePaper() == " ") {
-                    Toast.makeText(DocumentActivity.this, "Vehicle papers are not added", Toast.LENGTH_SHORT).show();
-                } else if (sharedPref.fetchDrivingLicense() == " " ) {
-                    Toast.makeText(DocumentActivity.this, "Driving license is not added", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadDocuments(Uri.parse(sharedPref.fetchMyPhoto()), Uri.parse(sharedPref.fetchNicFront()), Uri.parse(sharedPref.fetchNicBack()), Uri.parse(sharedPref.fetchVehiclePaper()), Uri.parse(sharedPref.fetchDrivingLicense()));
-                }
-
-            }
         });
     }
 

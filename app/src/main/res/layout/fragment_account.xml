@@ -121,7 +121,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/userName"
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -131,7 +131,7 @@
                     android:layout_weight="1"
 
                     android:fontFamily="@font/poppins_regular"
-                    android:text="basit murad"
+                    android:text=""
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +167,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/userNumber"
+                    android:id="@+id/txtUserNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -177,7 +177,7 @@
                     android:layout_weight="1"
 
                     android:fontFamily="@font/poppins_regular"
-                    android:text="12345678902"
+                    android:text=""
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +213,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/userEmail"
+                    android:id="@+id/txtUserEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -224,7 +224,7 @@
                     android:layout_weight="1"
 
                     android:fontFamily="@font/poppins_regular"
-                    android:text="basitmurad@gmail.com"
+                    android:text=""
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

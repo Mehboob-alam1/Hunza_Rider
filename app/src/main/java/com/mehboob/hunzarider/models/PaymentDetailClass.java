@@ -2,16 +2,25 @@ package com.mehboob.hunzarider.models;
 
 public class PaymentDetailClass {
 
-    String bankName,userBankName,userAccountNumber;
+  private   String bankName,userBankName,userAccountNumber;
 
-
+private String userId;
     public PaymentDetailClass() {
     }
 
-    public PaymentDetailClass(String bankName, String userBankName, String userAccountNumber) {
+    public PaymentDetailClass(String bankName, String userBankName, String userAccountNumber, String userId) {
         this.bankName = bankName;
         this.userBankName = userBankName;
         this.userAccountNumber = userAccountNumber;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getBankName() {
