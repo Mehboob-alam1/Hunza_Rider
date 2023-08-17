@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -36,17 +37,19 @@ import com.mehboob.hunzarider.fragments.HomeFragment;
 import com.mehboob.hunzarider.fragments.NotificationsFragment;
 import com.mehboob.hunzarider.fragments.WalletFragment;
 import com.mehboob.hunzarider.models.Availability;
+import com.mehboob.hunzarider.utils.SharedPref;
 
 public class DashboardActivity extends AppCompatActivity {
 
-   private ActivityDashboardBinding binding;
+    private ActivityDashboardBinding binding;
     private Fragment fragment;
     public DrawerLayout drawerLayout;
 
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-
+    private SharedPref sharedPref;
     private DatabaseReference mRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +58,9 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         drawerLayout = findViewById(R.id.drawerLayout);
+        sharedPref = new SharedPref(this);
 
-         mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.AVAILABILITY);
+        mRef = FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.AVAILABILITY);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
 
@@ -64,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new HomeFragment()).commit();
 
         binding.navigationView.setCheckedItem(R.id.nav_home);
-
+checkAvailability();
 
         binding.navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -160,12 +164,13 @@ public class DashboardActivity extends AppCompatActivity {
 
         mySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-              //  Toast.makeText(getApplicationContext(), "Switch is ON", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), "Switch is ON", Toast.LENGTH_SHORT).show();
 
                 setAvailability(true, Constants.USER_ID);
                 textView.setText("Online");
             } else {
-              //  Toast.makeText(getApplicationContext(), "Switch is OFF", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), "Switch is OFF", Toast.LENGTH_SHORT).show();
+
                 setAvailability(false, Constants.USER_ID);
                 textView.setText("Offline");
             }
@@ -175,23 +180,26 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void setAvailability(boolean avail, String userId) {
 
-        mRef.child(userId).setValue(new Availability(avail,userId))
+        mRef.child(userId).setValue(new Availability(avail, userId))
                 .addOnCompleteListener(task -> {
-                    if (task.isComplete() && task.isSuccessful())
-                    {
-                        Log.d("Availability","You are available");
-                    }else{
-                        Log.d("Availability","You are unavailable");
-
+                    if (task.isComplete() && task.isSuccessful()) {
+                        Log.d("Availability", "You are available");
+                        sharedPref.saveIsOnline(true);
+                    } else {
+                        Log.d("Availability", "You are unavailable");
+                        sharedPref.saveIsOnline(false);
                     }
                 }).addOnFailureListener(e -> {
-                    Log.d("Availability","You are available" +e.getLocalizedMessage());
-
+                    Log.d("Availability", "You are available" + e.getLocalizedMessage());
+                    sharedPref.saveIsOnline(false);
                 });
 
     }
 
+private void checkAvailability(){
 
+        binding.appBar.switch1.setChecked(sharedPref.isOnline());
+}
     private void callFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

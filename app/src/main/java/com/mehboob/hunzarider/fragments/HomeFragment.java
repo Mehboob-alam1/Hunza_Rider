@@ -17,12 +17,14 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -32,19 +34,28 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Point;
@@ -70,10 +81,14 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.mapboxsdk.utils.BitmapUtils;
 import com.mehboob.hunzarider.R;
 import com.mehboob.hunzarider.activities.DashboardActivity;
+import com.mehboob.hunzarider.activities.UserTrackActivity;
+import com.mehboob.hunzarider.adapters.RidesAdapter;
 import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.FragmentHomeBinding;
+import com.mehboob.hunzarider.models.ActiveRides;
 import com.mehboob.hunzarider.models.LocationObject;
 import com.mehboob.hunzarider.utils.LocationTrack;
+import com.mehboob.hunzarider.utils.SharedPref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,10 +106,13 @@ public class HomeFragment extends Fragment implements PermissionsListener {
     private MapboxMap mapboxMap;
     private Point origin, destination;
     private static float ZOOM_LEVEL = 16f;
+    private ArrayList<ActiveRides> list;
+    private RidesAdapter adapter;
     double latitude, longitude;
     private DatabaseReference mRef;
-
+    private SharedPref sharedPref;
     FragmentHomeBinding binding;
+    BottomSheetDialog dialogB;
     MarkerOptions markerOptions;
     private final List<List<Point>> points = new ArrayList<>();
     private final List<Point> outerPoints = new ArrayList<>();
@@ -112,6 +130,9 @@ public class HomeFragment extends Fragment implements PermissionsListener {
             .include(Constants.BOUND_CORNER_SE)
             .build();
 
+    boolean isRequest;
+    ActiveRides activeRides;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,9 +144,16 @@ public class HomeFragment extends Fragment implements PermissionsListener {
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
 
-
+        sharedPref = new SharedPref(getContext());
 //        mapView.onCreate(savedInstanceState);
         permissionsToRequest = findUnAskedPermissions(permissions);
+
+        list = new ArrayList<>();
+        if (sharedPref.isOnline()) {
+            binding.layoutOffline.getRoot().setVisibility(View.GONE);
+        } else {
+            binding.layoutOffline.getRoot().setVisibility(View.VISIBLE);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -134,6 +162,7 @@ public class HomeFragment extends Fragment implements PermissionsListener {
                 requestPermissions((String[]) permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
 
+        fetchRequests();
         if (isLocationEnabled()) {
             binding.mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
                 @Override
@@ -485,4 +514,113 @@ public class HomeFragment extends Fragment implements PermissionsListener {
             permissionsManager.requestLocationPermissions(requireActivity());
         }
     }
+
+
+    private void fetchRequests() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("RiderActiveRides");
+
+        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            isRequest = true;
+                            int child = (int) snapshot.getChildrenCount();
+                            activeRides = snapshot.getValue(ActiveRides.class);
+                            showDriverDialog(activeRides);
+
+                        } else {
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (isRequest) {
+            if (requireContext() != null && getView() != null) {
+                showDriverDialog(activeRides);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (dialogB.isShowing()) {
+            dialogB.dismiss();
+        }
+    }
+
+    private void showDriverDialog(ActiveRides order) {
+
+        ImageView userImage, call, sms;
+        TextView txtUserName, txtPrice, txtDistance, txtPickUpLocation, txtDropLocation;
+        TextView btnGoToPick;
+
+        dialogB = new BottomSheetDialog(requireContext(), R.style.AppBottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.bottom_request_ride, (LinearLayout) getView().findViewById(R.id.bottom_request_order));
+
+        dialogB.setContentView(bottomSheetView);
+        dialogB.show();
+
+
+        userImage = bottomSheetView.findViewById(R.id.userImage);
+        txtUserName = bottomSheetView.findViewById(R.id.txtUserName);
+        txtPrice = bottomSheetView.findViewById(R.id.txtPrice);
+        txtDistance = bottomSheetView.findViewById(R.id.txtDistance);
+        txtPickUpLocation = bottomSheetView.findViewById(R.id.txtPickUpLocation);
+        txtDropLocation = bottomSheetView.findViewById(R.id.txtDropLocation);
+        btnGoToPick = bottomSheetView.findViewById(R.id.btnGoToPick);
+
+
+        btnGoToPick.setOnClickListener(v -> {
+            dialogB.dismiss();
+
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("UserActiveRides");
+            databaseReference.child(order.getUserId())
+                    .child("driverArriving")
+                    .setValue(true)
+                    .addOnCompleteListener(task -> {
+                        if (task.isComplete() && task.isSuccessful()) {
+                            updateUI(order);
+                        }
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(requireContext(), ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    });
+
+
+        });
+
+
+        txtUserName.setText(order.getRiderName());
+        txtPrice.setText(order.getFare());
+        txtDistance.setText(order.getTotalDistance());
+        txtPickUpLocation.setText(order.getUserOriginLatitude() + " , " + order.getUserOriginLongitude());
+        txtDropLocation.setText(order.getUserDestLatitude() + " , " + order.getUserDestLatitude());
+    }
+
+    private void updateUI(ActiveRides order) {
+        Gson gson = new Gson();
+        Intent i = new Intent(getContext(), UserTrackActivity.class);
+
+        i.putExtra("data", gson.toJson(order));
+        i.putExtra("lat", gson.toJson(latitude));
+        i.putExtra("lon", gson.toJson(longitude));
+        getContext().startActivity(i);
+
+    }
+
+
 }

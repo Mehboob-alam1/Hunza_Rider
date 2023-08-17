@@ -12,12 +12,20 @@ public class SharedPref {
     private static final String VEHICLE_PAPER = "vehicle_paper";
     private static final String DRIVING_LICENSE = "driving_license";
     private static final String USER_ID="user_id";
+    private static final String IS_ONLINE="online";
 
     public SharedPref(Context context) {
         sharedPreferences = context.getSharedPreferences(MY_PHOTO_URI, Context.MODE_PRIVATE);
 
     }
-
+public void saveIsOnline(boolean isOnline){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean(IS_ONLINE,isOnline);
+        editor.apply();
+}
+public boolean isOnline(){
+        return sharedPreferences.getBoolean(IS_ONLINE,false);
+}
     public void saveMyPhotoUri(Uri photo){
         SharedPreferences.Editor editor= sharedPreferences.edit();
 
