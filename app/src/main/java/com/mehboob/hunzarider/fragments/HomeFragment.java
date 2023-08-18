@@ -15,6 +15,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineCap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineColor;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
+import static com.mehboob.hunzarider.constants.Constants.TOPIC;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -47,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +57,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -143,7 +146,7 @@ public class HomeFragment extends Fragment implements PermissionsListener {
         mRef = FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.LOCATION);
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
         sharedPref = new SharedPref(getContext());
 //        mapView.onCreate(savedInstanceState);
         permissionsToRequest = findUnAskedPermissions(permissions);
@@ -154,6 +157,18 @@ public class HomeFragment extends Fragment implements PermissionsListener {
         } else {
             binding.layoutOffline.getRoot().setVisibility(View.VISIBLE);
         }
+
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+                databaseReference.child(Constants.RIDER_PROFILE).child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("token").setValue(s);
+
+
+
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 

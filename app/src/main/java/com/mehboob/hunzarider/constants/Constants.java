@@ -12,6 +12,10 @@ public class Constants {
     public static final String BANK_DETAILS="BankDetails";
 public static final String LOCATION="location";
 public static final String AVAILABILITY="available";
+    public static final String TOPIC="/topics/hunzabykea";
+    public static final String BASE_URL="https://fcm.googleapis.com";
+    public static final String SERVER_KEY="AAAAGriD1uw:APA91bHV7PTVFTXFaCXBlgRrT8Lr8-G79rMZWb1aVDBCpphUykRKNNV73JH0nK8jEfsMqpzKRJ0rlxyS5-nAPkKHJKmoJ8wiMMElQRRM34TLJN4rv3WzmRvAtFk_J2aOsbP4f1_JEATu";
+    public static final String CONTENT_TYPE="application/json";
 
 
 
