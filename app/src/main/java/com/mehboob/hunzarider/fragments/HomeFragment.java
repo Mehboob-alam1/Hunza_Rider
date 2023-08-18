@@ -556,9 +556,9 @@ public class HomeFragment extends Fragment implements PermissionsListener {
     @Override
     public void onPause() {
         super.onPause();
-        if (dialogB.isShowing()) {
-            dialogB.dismiss();
-        }
+//        if (dialogB.isShowing()) {
+//            dialogB.dismiss();
+//        }
     }
 
     private void showDriverDialog(ActiveRides order) {

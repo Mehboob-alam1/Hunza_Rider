@@ -2,6 +2,8 @@ package com.mehboob.hunzarider.activities;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
+import static com.mapbox.core.constants.Constants.PRECISION_5;
 import static com.mapbox.core.constants.Constants.PRECISION_6;
 import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.fillColor;
@@ -20,8 +22,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.IconCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -46,11 +50,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mapbox.android.core.location.LocationEngine;
+import com.mapbox.android.core.location.LocationEngineProvider;
+import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
@@ -62,6 +70,7 @@ import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.core.exceptions.ServicesException;
 import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
 import com.mapbox.geojson.Point;
 import com.mapbox.geojson.Polygon;
@@ -80,6 +89,7 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.layers.FillLayer;
 import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.mapboxsdk.utils.BitmapUtils;
@@ -99,12 +109,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserTrackActivity extends AppCompatActivity implements PermissionsListener {
+
     private ActivityUserTrackBinding binding;
 
+    private PermissionsManager permissionsManager;
 
     private MapboxMap mapboxMap;
 
-    private PermissionsManager permissionsManager;
 
 
     private String searchedLocation;
@@ -120,6 +131,7 @@ public class UserTrackActivity extends AppCompatActivity implements PermissionsL
     private SharedPref sharedPref;
     //  Location
     private String distanceTotal;
+    BottomSheetDialog dialogB;
 
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
@@ -139,8 +151,8 @@ public class UserTrackActivity extends AppCompatActivity implements PermissionsL
     double latitude, longitude;
     String firstResultPoint;
     DirectionsRoute drivingRoute;
-
-
+    Point driverPoint;
+    Point userPoint;
     private static final LatLngBounds RESTRICTED_BOUNDS_AREA = new LatLngBounds.Builder()
             .include(Constants.BOUND_CORNER_NW)
             .include(Constants.BOUND_CORNER_NW1)
@@ -195,58 +207,107 @@ private double lon,lat;
                 requestPermissions((String[]) permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
         if (isLocationEnabled()) {
-            binding.mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
-                @Override
-                public void onMapReady(@NonNull com.mapbox.mapboxsdk.maps.MapboxMap mapboxMap) {
-                    UserTrackActivity.this.mapboxMap = mapboxMap;
-                    mapboxMap.setStyle(Style.OUTDOORS, new Style.OnStyleLoaded() {
-                        @Override
-                        public void onStyleLoaded(@NonNull Style style) {
+            binding.mapView.getMapAsync(mapboxMap -> {
+                UserTrackActivity.this.mapboxMap = mapboxMap;
+                mapboxMap.setStyle(Style.OUTDOORS, new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
 //                        mapboxMap.getUiSettings().setAttributionEnabled(false);
-                            //     enableLocationComponent(style);
+                        //     enableLocationComponent(style);
 
 
-                            enableLocations();
+                        enableLocations();
 //updateLocation();
 
-                            showBoundsArea(style);
+                        showBoundsArea(style);
 
 
-                            style.addImage("red-pin-icon-id", BitmapUtils.getBitmapFromDrawable(ContextCompat.getDrawable(UserTrackActivity.this, R.drawable.ic_baseline_place_24)));
-                            style.addLayer(new SymbolLayer("icon-layer-id", "icon-source-id").withProperties(
-                                    iconImage("red-pin-icon-id"),
-                                    iconIgnorePlacement(true),
-                                    iconAllowOverlap(true),
-                                    iconOffset(new Float[]{0f, -0f})
-                            ));
-                            style.addSource(new GeoJsonSource("route-source-id"));
-                            LineLayer routeLayer = new LineLayer("route-layer-id", "route-source-id");
+                        style.addImage("red-pin-icon-id", BitmapUtils.getBitmapFromDrawable(ContextCompat.getDrawable(UserTrackActivity.this, R.drawable.ic_baseline_place_24)));
+                        style.addLayer(new SymbolLayer("icon-layer-id", "icon-source-id").withProperties(
+                                iconImage("red-pin-icon-id"),
+                                iconIgnorePlacement(true),
+                                iconAllowOverlap(true),
+                                iconOffset(new Float[]{0f, -0f})
+                        ));
+                        style.addSource(new GeoJsonSource("route-source-id"));
+                        LineLayer routeLayer = new LineLayer("route-layer-id", "route-source-id");
 
-                            routeLayer.setProperties(
-                                    lineCap(Property.LINE_CAP_ROUND),
-                                    lineJoin(Property.LINE_JOIN_ROUND),
-                                    lineWidth(3f),
-                                    lineColor(Color.parseColor("#14CA15"))
-                            );
-                            style.addLayer(routeLayer);
+                        routeLayer.setProperties(
+                                lineCap(Property.LINE_CAP_ROUND),
+                                lineJoin(Property.LINE_JOIN_ROUND),
+                                lineWidth(3f),
+                                lineColor(Color.parseColor("#14CA15"))
+                        );
+                        style.addLayer(routeLayer);
 
-                            mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon), ZOOM_LEVEL));
-                            Point userDest = Point.fromLngLat(Double.parseDouble(activeRides.getUserDestLongitude()), Double.parseDouble(activeRides.getUserDestLatitude()));
-                            Point userPoint = Point.fromLngLat(Double.parseDouble(activeRides.getUserOriginLongitude()), Double.parseDouble(activeRides.getUserOriginLatitude()));
-                            getRoute(mapboxMap, userPoint, userDest);
+                        mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon), ZOOM_LEVEL));
+                        Point userDest = Point.fromLngLat(Double.parseDouble(activeRides.getUserDestLongitude()), Double.parseDouble(activeRides.getUserDestLatitude()));
+                         userPoint = Point.fromLngLat(Double.parseDouble(activeRides.getUserOriginLongitude()), Double.parseDouble(activeRides.getUserOriginLatitude()));
+                        getRoute(mapboxMap, userPoint, userDest);
+
+//                       getDriverRoute(mapboxMap,driverPoint,userPoint);
 
 
-                        }
-                    });
-                }
+
+                    }
+                });
             });
         } else {
             enableLocations();
         }
 
+
+binding.btnShowDialog.setOnClickListener(v -> {
+    showDriverDialog(activeRides);
+});
+        showDriverDialog(activeRides);
+
+
+
+
+    }
+
+    private void DrawLine(MapboxMap mapboxMap, Point driverPoint, Point userPoint) {
+
+
+        mapboxMap.setStyle(Style.MAPBOX_STREETS, style -> {
+            // Define the coordinates for your start and end points
+            LatLng startLatLng = new LatLng(driverPoint.latitude(), driverPoint.longitude());
+            LatLng endLatLng = new LatLng(userPoint.latitude(), userPoint.longitude());
+
+            // Create a list to hold the line's coordinates
+            List<Point> points = new ArrayList<>();
+            points.add(Point.fromLngLat(startLatLng.getLongitude(), startLatLng.getLatitude()));
+            points.add(Point.fromLngLat(endLatLng.getLongitude(), endLatLng.getLatitude()));
+
+            // Create a LineString feature
+            LineString lineString = LineString.fromLngLats(points);
+            Feature lineFeature = Feature.fromGeometry(lineString);
+
+            // Create a FeatureCollection containing the line feature
+            FeatureCollection featureCollection = FeatureCollection.fromFeatures(new Feature[] { lineFeature });
+
+            // Add a GeoJsonSource to the style
+            style.addSource(new GeoJsonSource("source-id", featureCollection));
+
+            // Add a LineLayer to the style
+            LineLayer lineLayer = new LineLayer("line-layer", "source-id");
+            lineLayer.setProperties(
+                    PropertyFactory.lineColor(Color.parseColor("#FF0000")),
+                    PropertyFactory.lineWidth(4f)
+            );
+            style.addLayer(lineLayer);
+        });
+
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
 
     private void enableLocations() {
 
@@ -260,6 +321,7 @@ private double lon,lat;
             latitude = locationTrack.getLatitude();
 
 
+             driverPoint= Point.fromLngLat(longitude,latitude);
             markerOptions = new MarkerOptions().setIcon(IconFactory.getInstance(this).defaultMarker());
             markerOptions.title("My location");
 
@@ -311,6 +373,8 @@ private double lon,lat;
         super.onStart();
         binding.mapView.onStart();
 
+
+
     }
 
     @SuppressLint("Lifecycle")
@@ -318,6 +382,7 @@ private double lon,lat;
     protected void onStop() {
         super.onStop();
         binding.mapView.onStop();
+
     }
 
     @SuppressLint("Lifecycle")
@@ -333,6 +398,7 @@ private double lon,lat;
         super.onDestroy();
         binding.mapView.onDestroy();
         locationTrack.stopListener();
+
     }
 
 
@@ -436,7 +502,7 @@ private double lon,lat;
                 Polygon.fromLngLats(points)));
 
         loadedMapStyle.addLayer(new FillLayer("layer-id", "source-id").withProperties(fillOpacity(.24f),
-                fillColor(Color.RED)));
+                fillColor(Color.TRANSPARENT)));
     }
 
 
@@ -524,7 +590,7 @@ private double lon,lat;
 
                     double distance = drivingRoute.distance() / 1000;
                     distanceTotal = String.format("%2f KM", distance);
-                    Toast.makeText(UserTrackActivity.this, "" + distanceTotal, Toast.LENGTH_SHORT).show();
+
                     if (mapboxMap != null) {
                         mapboxMap.getStyle(new Style.OnStyleLoaded() {
                             @Override
@@ -540,15 +606,13 @@ private double lon,lat;
 
                                         style.addSource(iconGeoJsonSource);
 
-                                        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(destination.latitude(), destination.longitude()), ZOOM_LEVEL));
 
                                     } else {
                                         iconGeoJsonSource.setGeoJson(Feature.fromGeometry(Point.fromLngLat(destination.longitude(), destination.latitude())));
 
-                                        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(destination.latitude(), destination.longitude()), ZOOM_LEVEL));
                                     }
 
-
+                                       addMarkers(new LatLng(origin.latitude(),origin.longitude()));
                                 }
                             }
                         });
@@ -563,10 +627,89 @@ private double lon,lat;
         });
     }
 
+    private void addMarkers(LatLng position) {
 
+        markerOptions = new MarkerOptions().setIcon(IconFactory.getInstance(this).defaultMarker()).setSnippet("Pick up");
+        markerOptions.title("pick up");
+
+        markerOptions.position(position);
+
+
+        mapboxMap.addMarker(markerOptions);
+      //  DrawLine(mapboxMap,driverPoint,userPoint);
+
+    }
 
     @SuppressLint("MissingInflatedId")
+    private void getDriverRoute(MapboxMap mapboxMap, Point origin, Point destination) {
 
+
+        MapboxDirections client = MapboxDirections.builder()
+
+                .origin(origin)
+                .destination(destination)
+                .overview(DirectionsCriteria.OVERVIEW_FULL)
+                .profile(DirectionsCriteria.PROFILE_DRIVING)
+                .accessToken(getString(R.string.mapbox_access_token))
+                .build();
+
+        client.enqueueCall(new Callback<DirectionsResponse>() {
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                if (response == null) {
+                    Log.d(TAG, "No routes found make sure you have correct access token");
+                    return;
+                } else {
+                    assert response.body() != null;
+                    if (response.body().routes().size() < 1) {
+                        Log.d(TAG, "No routes found");
+                        return;
+                    }
+                }
+
+
+                if (response.body() != null) {
+                    try {
+                        drivingRoute = response.body().routes().get(0);
+                    } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    }
+
+                    double distance = drivingRoute.distance() / 1000;
+                    distanceTotal = String.format("%2f KM", distance);
+
+                    if (mapboxMap != null) {
+                        mapboxMap.getStyle(style -> {
+                            GeoJsonSource routeLineSource = style.getSourceAs("route-source-id");
+                            GeoJsonSource iconGeoJsonSource = style.getSourceAs("icon-source-id");
+
+                            if (routeLineSource != null) {
+                                routeLineSource.setGeoJson(LineString.fromPolyline(drivingRoute.geometry(), PRECISION_5));
+
+                                if (iconGeoJsonSource == null) {
+//                                        iconGeoJsonSource = new GeoJsonSource("icon-source-id", Feature.fromGeometry(Point.fromLngLat(destination.longitude(), destination.latitude())));
+//
+//                                        style.addSource(iconGeoJsonSource);
+
+
+                                } else {
+                                    iconGeoJsonSource.setGeoJson(Feature.fromGeometry(Point.fromLngLat(destination.longitude(), destination.latitude())));
+
+                                }
+
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     protected boolean isLocationEnabled() {
 
@@ -599,13 +742,16 @@ private double lon,lat;
         TextView txtUserName, txtPrice, txtDistance, txtPickUpLocation, txtDropLocation;
         TextView btnComplete;
 
-        BottomSheetDialog dialogB = new BottomSheetDialog(this
+         dialogB = new BottomSheetDialog(this
                 , R.style.AppBottomSheetDialogTheme);
         View bottomSheetView = LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.bottom_order, findViewById(R.id.bottom_request_order));
 
         dialogB.setContentView(bottomSheetView);
+
         dialogB.show();
+
+
 
 
         userImage = bottomSheetView.findViewById(R.id.userImageBo);
@@ -728,4 +874,7 @@ private double lon,lat;
             startActivity(smsIntent);
         }
     }
+
+
+
 }
