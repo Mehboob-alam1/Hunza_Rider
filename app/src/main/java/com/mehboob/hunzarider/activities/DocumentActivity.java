@@ -1,5 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
+import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -110,6 +112,7 @@ public class DocumentActivity extends AppCompatActivity {
             } else if (sharedPref.fetchDrivingLicense() == " " ) {
                 Toast.makeText(DocumentActivity.this, "Driving license is not added", Toast.LENGTH_SHORT).show();
             } else {
+                hideKeyboard(this);
                 uploadDocuments(Uri.parse(sharedPref.fetchMyPhoto()), Uri.parse(sharedPref.fetchNicFront()), Uri.parse(sharedPref.fetchNicBack()), Uri.parse(sharedPref.fetchVehiclePaper()), Uri.parse(sharedPref.fetchDrivingLicense()));
             }
 

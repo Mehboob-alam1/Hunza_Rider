@@ -1,5 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
+import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -44,7 +46,7 @@ private DatabaseReference mRef;
                     String number = binding.edittextPhoneNumber.getText().toString();
                     String address = binding.edittextAddress.getText().toString();
 
-
+                    hideKeyboard(ProfileActivity.this);
                     progressDialog.setTitle("Signing in");
                     progressDialog.setMessage("PLease Wait");
                     progressDialog.setCancelable(false);

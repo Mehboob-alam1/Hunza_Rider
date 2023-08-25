@@ -1,5 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
+import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,9 +23,9 @@ import com.mehboob.hunzarider.databinding.ActivitySignUpBinding;
 import java.util.concurrent.TimeUnit;
 
 public class SignUpActivity extends AppCompatActivity {
-ActivitySignUpBinding binding;
-ProgressDialog progressDialog;
-FirebaseAuth firebaseAuth;
+private ActivitySignUpBinding binding;
+private ProgressDialog progressDialog;
+private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +77,14 @@ FirebaseAuth firebaseAuth;
             String email= binding.etEmailAddress.getText().toString();
             String password= binding.etPassword.getText().toString();
 
+         hideKeyboard(this);
+
             createAccount(email,password);
         }
     }
 
     private void createAccount(String email, String password) {
-
+progressDialog.dismiss();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -88,11 +92,13 @@ FirebaseAuth firebaseAuth;
                         // Sign in success, update UI with the signed-in user's information
 
                         FirebaseUser user = firebaseAuth.getCurrentUser();
+                        progressDialog.dismiss();
 
                         showSnackBar("User created successfully!");
                             updateUi();
                     } else {
                         // If sign in fails, display a message to the user.
+                        progressDialog.dismiss();
 
                        showSnackBar(task.getException().toString());
 

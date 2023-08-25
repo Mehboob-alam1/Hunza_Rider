@@ -1,5 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
+import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -60,6 +62,7 @@ public class AddVehicalActivity extends AppCompatActivity implements
                         String vehicleModel = binding.edittextModel.getText().toString();
                         String vehicleColor = binding.edittextColor.getText().toString();
                         String vehicleType = binding.spinner.getSelectedItem().toString();
+                        hideKeyboard(this);
                         mRef.child(Constants.VEHICLES).child(Constants.USER_ID).setValue(new VehicleDetailsClass(vehicleType,vehicleBrand,vehicleModel,vehicleColor,Constants.USER_ID))
                                         .addOnCompleteListener(task -> {
                                             if (task.isComplete()&& task.isSuccessful()){
