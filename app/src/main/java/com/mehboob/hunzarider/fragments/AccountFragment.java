@@ -54,6 +54,8 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                FirebaseAuth.getInstance().signOut();
+
                 startActivity(new Intent(getContext().getApplicationContext(), SignInActivity.class));
                 getActivity().finishAffinity();
             }

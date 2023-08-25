@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.mehboob.hunzarider.databinding.ActivitySignUpBinding;
@@ -42,14 +44,14 @@ FirebaseAuth firebaseAuth;
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckValidaion();
+                checkValidation();
             }
         });
 
-
-
-
-
+//
+//
+//
+//
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,55 +59,67 @@ FirebaseAuth firebaseAuth;
             }
         });
     }
-
-
-    public void CheckValidaion()
+//
+//
+    public void checkValidation()
     {
-        if(binding.edittextNumber.getText().toString().isEmpty())
-        {
-            Toast.makeText(this, "Enter number", Toast.LENGTH_SHORT).show();
+     if(binding.etEmailAddress.getText().toString().isEmpty()){
+            showSnackBar("Add your email address");
+
+        }else if (binding.etPassword.getText().toString().isEmpty()) {
+         
+         showSnackBar("Set a password");
+     }else{
+         
+
+            String email= binding.etEmailAddress.getText().toString();
+            String password= binding.etPassword.getText().toString();
+
+            createAccount(email,password);
         }
-        else if(binding.edittextNumber.getText().toString().trim().length()!=10) {
+    }
 
-            Toast.makeText(this, "Invalid Number", Toast.LENGTH_SHORT).show();
+    private void createAccount(String email, String password) {
+
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        showSnackBar("User created successfully!");
+                            updateUi();
+                    } else {
+                        // If sign in fails, display a message to the user.
+
+                       showSnackBar(task.getException().toString());
+
+                    }
+                });
+    }
+
+    private void updateUi() {
+
+        Intent i = new Intent(SignUpActivity.this,ProfileActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser()!=null){
+            startActivity(new Intent(SignUpActivity.this,DashboardActivity.class));
         }
-        else
-        {
-
-
-            progressDialog.show();
-            String number = binding.edittextNumber.getText().toString();
-
-            PhoneAuthProvider.getInstance().verifyPhoneNumber("+92" + number,
-                    60l, TimeUnit.SECONDS, SignUpActivity.this,
-                    new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                        @Override
-                        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-
-                        }
-
-                        @Override
-                        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-
-
-                            Intent intent = new Intent(SignUpActivity.this,OtpActivity.class);
-                            intent.putExtra("verificationID" ,s);
-                            intent.putExtra("number"+92,number);
-                            startActivity(intent);
-
-                        }
-
-                        @Override
-                        public void onVerificationFailed(@NonNull FirebaseException e) {
-
-                            Log.d("Exception",e.getMessage());
-                            progressDialog.dismiss();
-                            Toast.makeText(SignUpActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-
-        }
-
+    }
+    private  void showSnackBar(String message){
+        Snackbar snackbar = Snackbar.make(
+                findViewById(android.R.id.content),message
+                ,
+                Snackbar.LENGTH_SHORT
+        );
+        snackbar.show();
     }
 }

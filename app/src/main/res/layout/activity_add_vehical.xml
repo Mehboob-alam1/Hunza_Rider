@@ -73,14 +73,16 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edittextType"
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:hint="e,,g. Bike,car,Mazda,"
+            android:id="@+id/spinner"
+            style="@style/name_edittext_style"
+            android:padding="16dp"/>
 
-            style="@style/name_edittext_style" />
+
+
     </LinearLayout>
 
     <LinearLayout

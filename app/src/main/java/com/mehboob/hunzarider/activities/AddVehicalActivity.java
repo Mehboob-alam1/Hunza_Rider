@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -14,10 +16,15 @@ import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.ActivityAddVehicalBinding;
 import com.mehboob.hunzarider.models.VehicleDetailsClass;
 
-public class AddVehicalActivity extends AppCompatActivity {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class AddVehicalActivity extends AppCompatActivity implements
+        AdapterView.OnItemSelectedListener {
 
     ActivityAddVehicalBinding binding;
     private DatabaseReference mRef;
+    private String [] vehicles={"Select a vehicle","Car,Bike,Ac Car"};
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,12 @@ public class AddVehicalActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         mRef=FirebaseDatabase.getInstance().getReference(Constants.RIDER);
 
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,vehicles);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        binding.spinner.setAdapter(aa);
+
+        binding.spinner.setOnClickListener((View.OnClickListener) this);
         progressDialog= new ProgressDialog(this);
         progressDialog.setTitle("Adding vehicle ");
         progressDialog.setMessage("Please Wait...");
@@ -33,17 +46,20 @@ public class AddVehicalActivity extends AppCompatActivity {
         binding.linearLayoutDocument
                 .setOnClickListener(v -> {
 
-                    if ( binding.edittextType.getText().toString().isEmpty() ||
+                    if (
                             binding.edittextBrand.getText().toString().isEmpty()||binding.edittextModel.getText().toString().isEmpty()
                             ||binding.edittextColor.getText().toString().isEmpty())
                     {
                         Toast.makeText(AddVehicalActivity.this, "Fill the required information ", Toast.LENGTH_SHORT).show();
+                    }else if (binding.spinner.getSelectedItem().toString().equals("Select a vehicle")){
+                        Toast.makeText(this, "Select a vehicle", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        String vehicleType = binding.edittextType.getText().toString();
+
                         String vehicleBrand = binding.edittextBrand.getText().toString();
                         String vehicleModel = binding.edittextModel.getText().toString();
                         String vehicleColor = binding.edittextColor.getText().toString();
+                        String vehicleType = binding.spinner.getSelectedItem().toString();
                         mRef.child(Constants.VEHICLES).child(Constants.USER_ID).setValue(new VehicleDetailsClass(vehicleType,vehicleBrand,vehicleModel,vehicleColor,Constants.USER_ID))
                                         .addOnCompleteListener(task -> {
                                             if (task.isComplete()&& task.isSuccessful()){
@@ -63,5 +79,16 @@ public class AddVehicalActivity extends AppCompatActivity {
                     }
                 });
         binding.btnback.setOnClickListener(v -> finish());
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

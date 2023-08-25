@@ -42,6 +42,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -587,7 +588,14 @@ public class HomeFragment extends Fragment implements PermissionsListener {
                 .inflate(R.layout.bottom_request_ride, (LinearLayout) getView().findViewById(R.id.bottom_request_order));
 
         dialogB.setContentView(bottomSheetView);
-        dialogB.show();
+
+        try {
+            dialogB.show();
+        }
+        catch (WindowManager.BadTokenException e) {
+            //use a log message
+        }
+
 
 
         userImage = bottomSheetView.findViewById(R.id.userImage);

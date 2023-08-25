@@ -44,12 +44,7 @@ public class OtpActivity extends AppCompatActivity {
         number = (getIntent().getStringExtra("number"));
         verificatonID = getIntent().getStringExtra("verificationID");
 
-        binding.btnVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(OtpActivity.this, ProfileActivity.class));
-            }
-        });
+
 
         binding.btnResend.setOnClickListener(new View.OnClickListener() {
             @Override
