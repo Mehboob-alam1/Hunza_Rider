@@ -2,24 +2,69 @@ package com.mehboob.hunzarider.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.work.Data;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mehboob.hunzarider.R;
+import com.mehboob.hunzarider.constants.Constants;
+import com.mehboob.hunzarider.databinding.FragmentNotificationsBinding;
 
 
 public class NotificationsFragment extends Fragment {
 
 
-
+ FragmentNotificationsBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notifications, container, false);
+
+
+        binding=FragmentNotificationsBinding.inflate(inflater,container,false);
+
+
+
+
+
+
+        fetchNotifications();
+
+
+
+
+
+        return binding.getRoot();
+    }
+
+    private void fetchNotifications() {
+
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
+
+        ref.child(Constants.RIDER).child("UserNotifications").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+
+
+                }else{
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
     }
 }
