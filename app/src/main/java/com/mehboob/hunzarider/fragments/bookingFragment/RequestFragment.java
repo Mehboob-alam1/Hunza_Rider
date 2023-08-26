@@ -65,8 +65,8 @@ public class RequestFragment extends Fragment {
                             Toast.makeText(getContext(), "" + activeRides.getRiderName(), Toast.LENGTH_SHORT).show();
                             adapter = new RidesAdapter(getContext(), list);
                             binding.progresbar.setVisibility(View.GONE);
-                            binding.recyclerCancelled.setAdapter(adapter);
-                            binding.recyclerCancelled.setLayoutManager(new LinearLayoutManager(getContext()));
+                            binding.recyclerRequest.setAdapter(adapter);
+                            binding.recyclerRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
                         } else {
                             binding.progresbar.setVisibility(View.GONE);

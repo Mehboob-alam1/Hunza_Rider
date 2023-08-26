@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/request_layout"
-        android:id="@+id/recyclerCancelled"/>
+        android:id="@+id/recyclerRequest"/>
 
 </FrameLayout>

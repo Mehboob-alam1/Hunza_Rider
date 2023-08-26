@@ -16,8 +16,9 @@ public static final String AVAILABILITY="available";
     public static final String BASE_URL="https://fcm.googleapis.com";
     public static final String SERVER_KEY="AAAAGriD1uw:APA91bHV7PTVFTXFaCXBlgRrT8Lr8-G79rMZWb1aVDBCpphUykRKNNV73JH0nK8jEfsMqpzKRJ0rlxyS5-nAPkKHJKmoJ8wiMMElQRRM34TLJN4rv3WzmRvAtFk_J2aOsbP4f1_JEATu";
     public static final String CONTENT_TYPE="application/json";
+    public static final String RIDER_COMPLETED_RIDES="RiderCompletedRides";
 
-
+    public static final String RIDER_CANCELLED_RIDES="RiderCancelledRides";
 
     public static final LatLng BOUND_CORNER_NW = new LatLng(35.92508749263842, 74.24960570785369);
     public static final LatLng BOUND_CORNER_NW1 = new LatLng(35.930513220855474, 74.25887085720592);

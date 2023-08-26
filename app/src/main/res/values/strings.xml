@@ -16,7 +16,6 @@ Let’s make your day great with Hunza Bikeya!</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="mapbox_access_token">sk.eyJ1IjoiYmFpZ3VsbGFoNDQiLCJhIjoiY2xobTg3cWl4MDQzcTNkbmc4M29jamV1eCJ9.UaBdqZyxWMLD_R3-liX4ZQ</string>
-
     <string name="privacy_policy">Privacy Policy!</string>
     <string name="please_enter_a_valid_mobile_number">*Please enter a valid mobile number</string>
     <string name="please_enter_a_mobile_number">*Please enter a  mobile number</string>
@@ -30,4 +29,5 @@ Let’s make your day great with Hunza Bikeya!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum_is_a_placeholder_text_commonly_used_to_demonstrate_the_visual_form_of_a_document_or_a_typeface_without_relying_on_meaningful_content_lorem_ipsum_may_be_used_as_a_placeholder_before_final_copy_is_available">Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</string>
     <string name="sign_in_with_your_phone_number">Sign in with your phone number</string>
+    <string name="date_amp_time"><![CDATA[Date & time]]></string>
 </resources>
