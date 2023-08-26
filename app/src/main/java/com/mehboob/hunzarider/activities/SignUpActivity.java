@@ -33,8 +33,8 @@ private FirebaseAuth firebaseAuth;
         setContentView(binding.getRoot());
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Sending Otp");
-        progressDialog.setMessage("PLease Wait");
+        progressDialog.setTitle("Sign up");
+        progressDialog.setMessage("Please wait.....");
         progressDialog.setCancelable(false);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser()!=null)
@@ -78,13 +78,13 @@ private FirebaseAuth firebaseAuth;
             String password= binding.etPassword.getText().toString();
 
          hideKeyboard(this);
-
+progressDialog.show();
             createAccount(email,password);
         }
     }
 
     private void createAccount(String email, String password) {
-progressDialog.dismiss();
+
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {

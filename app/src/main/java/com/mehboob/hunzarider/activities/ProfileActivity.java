@@ -47,9 +47,10 @@ private DatabaseReference mRef;
                     String address = binding.edittextAddress.getText().toString();
 
                     hideKeyboard(ProfileActivity.this);
-                    progressDialog.setTitle("Signing in");
-                    progressDialog.setMessage("PLease Wait");
+
+                    progressDialog.setMessage("Please wait....");
                     progressDialog.setCancelable(false);
+                    progressDialog.show();
 
 
                     mRef.child(Constants.RIDER_PROFILE).child(Constants.USER_ID).setValue(new ProfileDetailsClass(name,email,number,address,Constants.USER_ID))

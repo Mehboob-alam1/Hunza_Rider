@@ -27,12 +27,21 @@ public class ActiveRides {
     private String userId;
     private boolean status;
     private String driverImage;
+    private String userImage;
 
 
     public ActiveRides() {
     }
 
-    public ActiveRides(String vehicleType, String vehicleBrand, String vehicleModel, String vehicleColor, String driverUserId, String driverName, String driverAddress, String driverPhoneNumber, String riderName, String riderEmail, String riderPhone, String riderVehicle, String fare, String nearBy, String totalDistance, String currentTime, String paymentMethod, String userOriginLatitude, String userOriginLongitude, String userDestLatitude, String userDestLongitude, String userId, boolean status, String driverImage) {
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
+    public ActiveRides(String vehicleType, String vehicleBrand, String vehicleModel, String vehicleColor, String driverUserId, String driverName, String driverAddress, String driverPhoneNumber, String riderName, String riderEmail, String riderPhone, String riderVehicle, String fare, String nearBy, String totalDistance, String currentTime, String paymentMethod, String userOriginLatitude, String userOriginLongitude, String userDestLatitude, String userDestLongitude, String userId, boolean status, String driverImage, String userImage) {
         this.vehicleType = vehicleType;
         this.vehicleBrand = vehicleBrand;
         this.vehicleModel = vehicleModel;
@@ -57,6 +66,7 @@ public class ActiveRides {
         this.userId = userId;
         this.status = status;
         this.driverImage = driverImage;
+        this.userImage = userImage;
     }
 
     public String getVehicleType() {

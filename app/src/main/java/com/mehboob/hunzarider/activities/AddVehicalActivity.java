@@ -21,12 +21,11 @@ import com.mehboob.hunzarider.models.VehicleDetailsClass;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AddVehicalActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener {
+public class AddVehicalActivity extends AppCompatActivity  {
 
     ActivityAddVehicalBinding binding;
     private DatabaseReference mRef;
-    private String [] vehicles={"Select a vehicle","Car,Bike,Ac Car"};
+    private String [] vehicles={"Select a vehicle","Car","Bike","Ac Car"};
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,18 @@ public class AddVehicalActivity extends AppCompatActivity implements
         //Setting the ArrayAdapter data on the Spinner
         binding.spinner.setAdapter(aa);
 
-        binding.spinner.setOnClickListener((View.OnClickListener) this);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         progressDialog= new ProgressDialog(this);
         progressDialog.setTitle("Adding vehicle ");
         progressDialog.setMessage("Please Wait...");
@@ -85,13 +95,5 @@ public class AddVehicalActivity extends AppCompatActivity implements
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
