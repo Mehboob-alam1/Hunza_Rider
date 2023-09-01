@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mehboob.hunzarider.constants.Constants;
@@ -53,7 +54,7 @@ private DatabaseReference mRef;
                     progressDialog.show();
 
 
-                    mRef.child(Constants.RIDER_PROFILE).child(Constants.USER_ID).setValue(new ProfileDetailsClass(name,email,number,address,Constants.USER_ID))
+                    mRef.child(Constants.RIDER_PROFILE).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(new ProfileDetailsClass(name,email,number,address,Constants.USER_ID))
                             .addOnCompleteListener(task -> {
                                 if (task.isComplete() && task.isSuccessful()){
                                     progressDialog.dismiss();
