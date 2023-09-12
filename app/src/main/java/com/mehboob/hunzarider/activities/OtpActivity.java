@@ -116,7 +116,6 @@ public class OtpActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(OtpActivity.this, "Exception" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(OtpActivity.this, "Exception" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });

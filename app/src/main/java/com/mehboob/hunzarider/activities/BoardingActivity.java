@@ -41,7 +41,7 @@ public class BoardingActivity extends AppCompatActivity {
             binding.textView2.setVisibility(View.VISIBLE);
 
             binding.dotsIndicator.setVisibility(View.GONE);
-            startActivity(new Intent(BoardingActivity.this, SignInActivity.class));
+            startActivity(new Intent(BoardingActivity.this, LoginActivity.class));
             finish();
         }
 
@@ -84,7 +84,7 @@ public class BoardingActivity extends AppCompatActivity {
 
                         binding.btnStart.setOnClickListener(v -> {
                             // Intent intent = new Intent(BoardingActivity.this, LoginActivity.class);
-                            startActivity(new Intent(BoardingActivity.this, SignUpActivity.class));
+                            startActivity(new Intent(BoardingActivity.this, LoginActivity.class));
                         });
                 }
 

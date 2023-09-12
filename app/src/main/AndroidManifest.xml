@@ -16,6 +16,14 @@
         android:theme="@style/Theme.HunzaRider"
         tools:targetApi="31">
         <activity
+            android:name=".activities.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyTheme">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.UserTrackActivity"
             android:exported="false"
             android:theme="@style/Theme.MyTheme">
@@ -44,23 +52,23 @@
         <activity
             android:name=".activities.WithdrawActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.DashboardActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.OtpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.SignInActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="true"
@@ -72,11 +80,11 @@
         <activity
             android:name=".activities.DocumentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.PaymentActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyTheme"></activity>
+            android:theme="@style/Theme.MyTheme" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"
@@ -90,15 +98,15 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".messaging.FirebaseService"
-            android:permission="com.google.android.c2dm.permission.Send"
-            android:exported="true">
+        <service
+            android:name=".messaging.FirebaseService"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.Send">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-                <action android:name="om.google.android.c2dm.intent.Recieve"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="om.google.android.c2dm.intent.Recieve" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

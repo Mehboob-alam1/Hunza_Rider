@@ -21,7 +21,7 @@ import com.mehboob.hunzarider.models.VehicleDetailsClass;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AddVehicalActivity extends AppCompatActivity  {
+public class  AddVehicalActivity extends AppCompatActivity  {
 
     ActivityAddVehicalBinding binding;
     private DatabaseReference mRef;
