@@ -97,10 +97,17 @@
                     android:layout_marginStart="5dp"
                     android:background="@null"
                     android:inputType="number"
+                    android:hint="3171981460"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConnect"
@@ -113,6 +120,16 @@
             android:text="Connect"
             android:textAllCaps="false"
             android:textColor="@color/white" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:visibility="gone"
+                android:id="@+id/progressBar"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>

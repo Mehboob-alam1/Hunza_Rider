@@ -1,10 +1,48 @@
 {
   "project_info": {
     "project_number": "114764797676",
+    "firebase_url": "https://hunza-bykea-c0ca9-default-rtdb.firebaseio.com",
     "project_id": "hunza-bykea-c0ca9",
     "storage_bucket": "hunza-bykea-c0ca9.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114764797676:android:39028369a50691f30ef7c9",
+        "android_client_info": {
+          "package_name": "com.mehboob.hunzabykea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114764797676-qihadng2ietf7j51hh84qu7kgsk4dnlo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehboob.hunzabykea",
+            "certificate_hash": "59a1de8e5bad28d8e31b340939ecdf50802d256f"
+          }
+        },
+        {
+          "client_id": "114764797676-sik0r0pm6lgopt1da8f20gj7ocqb7hed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS1I-4GxM9yY_oEQXmL_iVtmmdpADH9O8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114764797676-iimanrcrapt7a5shji55ki7hhh9ahgl2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:114764797676:android:b57c2bfdf74f75b20ef7c9",
@@ -14,7 +52,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "114764797676-iimanrcrapt7a5shji55ki7hhh9ahgl2.apps.googleusercontent.com",
+          "client_id": "114764797676-6d9mu3ufccnmjvdl4vhc8ie2qeal1vh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehboob.hunzarider",
+            "certificate_hash": "59a1de8e5bad28d8e31b340939ecdf50802d256f"
+          }
+        },
+        {
+          "client_id": "114764797676-sik0r0pm6lgopt1da8f20gj7ocqb7hed.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
