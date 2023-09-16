@@ -10,11 +10,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mehboob.hunzarider.R;
+import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.ActivityLoginBinding;
 import com.mehboob.hunzarider.utils.HideKeyboard;
 
@@ -68,13 +73,18 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.btnConnect.setVisibility(View.VISIBLE);
+
+
                         Intent intent= new Intent(LoginActivity.this,OtpActivity.class);
                         intent.putExtra("number",phoneNumber);
                         intent.putExtra("verificationID",verificationId);
                         startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     }
                 });
     }
+
+
 
     private void checkEditText() {
         binding.etPhoneNumber.addTextChangedListener(new TextWatcher() {

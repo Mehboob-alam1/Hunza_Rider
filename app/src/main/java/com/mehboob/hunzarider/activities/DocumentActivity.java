@@ -1,6 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
 import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+import static com.mehboob.hunzarider.utils.Utils.showSnackBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DocumentActivity extends AppCompatActivity {
-    ActivityDocumentBinding binding;
+  private   ActivityDocumentBinding binding;
 
     private static final int pickImage = 1;
 
@@ -56,8 +58,8 @@ public class DocumentActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
         sharedPref = new SharedPref(this);
-        storageReference = FirebaseStorage.getInstance().getReference(Constants.DOCUMENTS).child(Constants.USER_ID);
-        mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.DOCUMENTS).child(Constants.USER_ID);
+        storageReference = FirebaseStorage.getInstance().getReference(Constants.DOCUMENTS).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mRef= FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.DOCUMENTS).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         urlStrings = new ArrayList<>();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Uploading Documents");
@@ -161,11 +163,16 @@ public class DocumentActivity extends AppCompatActivity {
                 .addOnCompleteListener(
                         task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(DocumentActivity.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(DocumentActivity.this,PaymentActivity.class));
+                                showSnackBar(DocumentActivity.this,"Documents added");
+                                sharedPref.setDocumentsCompleted(true);
+                                addDocumentStatus(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+                            }else{
+                                showSnackBar(DocumentActivity.this,"Something went wrong");
                             }
                         }
-                ).addOnFailureListener(e -> Toast.makeText(DocumentActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+                ).addOnFailureListener(e ->showSnackBar(DocumentActivity.this,e.getLocalizedMessage()));
         mProgressDialog.dismiss();
 
 
@@ -221,6 +228,24 @@ public class DocumentActivity extends AppCompatActivity {
             binding.drivingLicence.setImageURI(Uri.parse(sharedPref.fetchDrivingLicense()));
         }
 
+
+    }
+    private void addDocumentStatus(String userId) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+        databaseReference.child("status")
+                .child(userId)
+                .child("documentsCompleted")
+                .setValue(true).addOnCompleteListener(task -> {
+
+                    if (task.isComplete() && task.isSuccessful()){
+                        startActivity(new Intent(DocumentActivity.this,PaymentActivity.class));
+                    }else{
+                        showSnackBar(DocumentActivity.this,"Check internet connection");
+                    }
+                }).addOnFailureListener(e -> {
+                    showSnackBar(DocumentActivity.this,e.getLocalizedMessage());
+                });
 
     }
 }

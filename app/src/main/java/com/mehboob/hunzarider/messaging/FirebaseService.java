@@ -16,7 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import com.mehboob.hunzarider.R;
-import com.mehboob.hunzarider.activities.SignInActivity;
+import com.mehboob.hunzarider.activities.LoginActivity;
 
 import java.util.Random;
 
@@ -25,7 +25,7 @@ private final String CHANNEL_ID="channel_id";
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        Intent intent = new Intent(this, SignInActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         int notificationId= new Random().nextInt();

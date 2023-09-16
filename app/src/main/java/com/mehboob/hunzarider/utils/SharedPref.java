@@ -13,9 +13,24 @@ public class SharedPref {
     private static final String DRIVING_LICENSE = "driving_license";
     private static final String USER_ID="user_id";
     private static final String IS_ONLINE="online";
-
+    private static final String PROFILE_COMPLETED_KEY = "ProfileCompleted";
+    private static final String LOGGED_IN_KEY = "LoggedIn";
+    private static final String VEHICLE_INFO_COMPLETED_KEY = "VehicleInfoCompleted";
+    private static final String DOCUMENTS_COMPLETED_KEY = "DocumentsCompleted";
+    private static final String PAYMENT_DETAILS_COMPLETED_KEY = "PaymentDetailsCompleted";
     public SharedPref(Context context) {
         sharedPreferences = context.getSharedPreferences(MY_PHOTO_URI, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(NIC_FRONT, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(NIC_BACK, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(VEHICLE_PAPER, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(DRIVING_LICENSE, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(USER_ID, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(IS_ONLINE, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PROFILE_COMPLETED_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(LOGGED_IN_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(VEHICLE_INFO_COMPLETED_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(DOCUMENTS_COMPLETED_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PAYMENT_DETAILS_COMPLETED_KEY, Context.MODE_PRIVATE);
 
     }
 public void saveIsOnline(boolean isOnline){
@@ -92,6 +107,43 @@ public boolean isOnline(){
 
         return sharedPreferences.getString(DRIVING_LICENSE,"");
     }
+    public boolean isProfileCompleted() {
+        return sharedPreferences.getBoolean(PROFILE_COMPLETED_KEY, false);
+    }
 
+    public void setProfileCompleted(boolean completed) {
+        sharedPreferences.edit().putBoolean(PROFILE_COMPLETED_KEY, completed).apply();
+    }
 
+    public boolean isLoggedIn() {
+        return sharedPreferences.getBoolean(LOGGED_IN_KEY, false);
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        sharedPreferences.edit().putBoolean(LOGGED_IN_KEY, loggedIn).apply();
+    }
+
+    public boolean isVehicleInfoCompleted() {
+        return sharedPreferences.getBoolean(VEHICLE_INFO_COMPLETED_KEY, false);
+    }
+
+    public void setVehicleInfoCompleted(boolean completed) {
+        sharedPreferences.edit().putBoolean(VEHICLE_INFO_COMPLETED_KEY, completed).apply();
+    }
+
+    public boolean isDocumentsCompleted() {
+        return sharedPreferences.getBoolean(DOCUMENTS_COMPLETED_KEY, false);
+    }
+
+    public void setDocumentsCompleted(boolean completed) {
+        sharedPreferences.edit().putBoolean(DOCUMENTS_COMPLETED_KEY, completed).apply();
+    }
+
+    public boolean isPaymentDetailsCompleted() {
+        return sharedPreferences.getBoolean(PAYMENT_DETAILS_COMPLETED_KEY, false);
+    }
+
+    public void setPaymentDetailsCompleted(boolean completed) {
+        sharedPreferences.edit().putBoolean(PAYMENT_DETAILS_COMPLETED_KEY, completed).apply();
+    }
 }

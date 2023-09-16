@@ -19,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.ActivityOtpBinding;
 import com.mehboob.hunzarider.utils.SharedPref;
 
@@ -48,7 +51,6 @@ public class OtpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         number = (getIntent().getStringExtra("number"));
         verificatonID = getIntent().getStringExtra("verificationID");
-
 
 
         binding.btnResend.setOnClickListener(v -> new CountDownTimer(60000, 1000) {
@@ -101,24 +103,29 @@ public class OtpActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             sharedPref.saveUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            sharedPref.setLoggedIn(true);
+                            addStatus(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
                             startActivity(new Intent(OtpActivity.this, ProfileActivity.class));
 
                         } else {
-                           showSnackBar(OtpActivity.this,"Verification code invalid");
+                            showSnackBar(OtpActivity.this, "Verification code invalid");
                         }
-                    }).addOnFailureListener(e -> showSnackBar(OtpActivity.this,e.getLocalizedMessage()));
-                }else{
-                    showSnackBar(OtpActivity.this,"Check internet connection");
+                    }).addOnFailureListener(e -> showSnackBar(OtpActivity.this, e.getLocalizedMessage()));
+                } else {
+                    showSnackBar(OtpActivity.this, "Check internet connection");
                 }
             }
         });
 
 
     }
+
     private void sendVerificationCode(String phoneNumber) {
 
 
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(  phoneNumber,
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber,
                 60,
                 TimeUnit.SECONDS,
                 OtpActivity.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -135,8 +142,18 @@ public class OtpActivity extends AppCompatActivity {
 
                     @Override
                     public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                      OtpListner();
+                        OtpListner();
                     }
                 });
+    }
+
+    private void addStatus(String userId) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+        databaseReference.child("status")
+                .child(userId)
+                .child("Login")
+                .setValue(true);
+
     }
 }

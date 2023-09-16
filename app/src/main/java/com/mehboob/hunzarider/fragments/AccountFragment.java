@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mehboob.hunzarider.R;
-import com.mehboob.hunzarider.activities.SignInActivity;
+import com.mehboob.hunzarider.activities.LoginActivity;
 import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.FragmentAccountBinding;
 import com.mehboob.hunzarider.models.ProfileDetailsClass;
@@ -56,7 +55,7 @@ public class AccountFragment extends Fragment {
 
                 FirebaseAuth.getInstance().signOut();
 
-                startActivity(new Intent(getContext().getApplicationContext(), SignInActivity.class));
+                startActivity(new Intent(getContext().getApplicationContext(), LoginActivity.class));
                 getActivity().finishAffinity();
             }
         });

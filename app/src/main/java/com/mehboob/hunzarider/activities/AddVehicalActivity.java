@@ -1,6 +1,7 @@
 package com.mehboob.hunzarider.activities;
 
 import static com.mehboob.hunzarider.utils.HideKeyboard.hideKeyboard;
+import static com.mehboob.hunzarider.utils.Utils.showSnackBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,27 +13,33 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mehboob.hunzarider.constants.Constants;
 import com.mehboob.hunzarider.databinding.ActivityAddVehicalBinding;
 import com.mehboob.hunzarider.models.VehicleDetailsClass;
+import com.mehboob.hunzarider.utils.SharedPref;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class  AddVehicalActivity extends AppCompatActivity  {
 
-    ActivityAddVehicalBinding binding;
+    private ActivityAddVehicalBinding binding;
     private DatabaseReference mRef;
     private String [] vehicles={"Select a vehicle","Car","Bike","Ac Car"};
     private ProgressDialog progressDialog;
+
+    private SharedPref sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddVehicalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mRef=FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+
+        sharedPref = new SharedPref(this);
 
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,vehicles);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,15 +80,16 @@ public class  AddVehicalActivity extends AppCompatActivity  {
                         String vehicleColor = binding.edittextColor.getText().toString();
                         String vehicleType = binding.spinner.getSelectedItem().toString();
                         hideKeyboard(this);
-                        mRef.child(Constants.VEHICLES).child(Constants.USER_ID).setValue(new VehicleDetailsClass(vehicleType,vehicleBrand,vehicleModel,vehicleColor,Constants.USER_ID))
+                        mRef.child(Constants.VEHICLES).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(new VehicleDetailsClass(vehicleType,vehicleBrand,vehicleModel,vehicleColor,Constants.USER_ID))
                                         .addOnCompleteListener(task -> {
                                             if (task.isComplete()&& task.isSuccessful()){
                                                 progressDialog.dismiss();
-                                                Toast.makeText(AddVehicalActivity.this, "Vehicle added successfully", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(AddVehicalActivity.this,DocumentActivity.class));
+                                               showSnackBar(AddVehicalActivity.this,"Vehicle data added");
+                                               sharedPref.setVehicleInfoCompleted(true);
+                                              addVehicleStatus(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                             }else{
                                                 progressDialog.dismiss();
-                                                Toast.makeText(AddVehicalActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                                showSnackBar(AddVehicalActivity.this,"Something went wrong");
                                             }
                                         }).addOnFailureListener(e -> {
                                             progressDialog.dismiss();
@@ -95,5 +103,22 @@ public class  AddVehicalActivity extends AppCompatActivity  {
     }
 
 
+    private void addVehicleStatus(String userId) {
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+        databaseReference.child("status")
+                .child(userId)
+                .child("vehicleInfoCompleted")
+                .setValue(true).addOnCompleteListener(task -> {
+
+                    if (task.isComplete() && task.isSuccessful()){
+                        startActivity(new Intent(AddVehicalActivity.this,DocumentActivity.class));
+                    }else{
+                        showSnackBar(AddVehicalActivity.this,"Check internet connection");
+                    }
+                }).addOnFailureListener(e -> {
+                    showSnackBar(AddVehicalActivity.this,e.getLocalizedMessage());
+                });
+
+    }
 }

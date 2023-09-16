@@ -8,6 +8,8 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation.Vertical</item>
+
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
@@ -19,6 +21,7 @@
         <item name="colorPrimary">#12E814</item>
         <item name="colorPrimaryVariant">#14CA15</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation.Vertical</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
