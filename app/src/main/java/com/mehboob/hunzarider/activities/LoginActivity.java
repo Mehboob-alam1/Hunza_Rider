@@ -35,8 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
+        binding.btnConnect.setClickable(false);
         checkEditText();
 
         binding.btnConnect.setOnClickListener(v -> {
