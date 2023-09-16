@@ -25,6 +25,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:id="@+id/imgUserImageBanner"
                 android:src="@drawable/kholi"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="10dp"
@@ -51,8 +52,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Basit Murad"
+                    android:text=""
                     android:textSize="16sp"
+                    android:id="@+id/txtNameBanner"
                     android:fontFamily="@font/poppins"
                     android:textColor="@color/white"
 
@@ -64,6 +66,7 @@
                     android:src="@drawable/edit_icon"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="center_vertical"
+                    android:id="@+id/imgEditBanner"
 
                     android:background="@drawable/image_back"
                     android:padding="5dp"
@@ -76,8 +79,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="abcdef2344@gmail.com"
+                android:text=""
                 android:textColor="@color/white"
+                android:id="@+id/txtEmailNumberBanner"
                 android:fontFamily="@font/poppins"
                 android:textSize="12sp"
 

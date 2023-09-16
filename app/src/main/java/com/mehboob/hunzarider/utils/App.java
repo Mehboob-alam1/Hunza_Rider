@@ -4,11 +4,14 @@ import static com.mehboob.hunzarider.utils.Utils.showSnackBar;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,13 +84,16 @@ public class App extends Application  implements Application.ActivityLifecycleCa
         } else {
             // User ID is not empty, proceed with your logic using the user ID
             SharedPref preferencesHelper = new SharedPref(this);
-
+            ProgressDialog bar = new ProgressDialog(this);
+            bar.setMessage("Checking profile...");
             // Check if the user has completed login and profile
 
             if (preferencesHelper.isLoggedIn() && preferencesHelper.isProfileCompleted() &&
                     preferencesHelper.isVehicleInfoCompleted() &&
                     preferencesHelper.isDocumentsCompleted() &&
                     preferencesHelper.isPaymentDetailsCompleted()) {
+
+                bar.dismiss();
                 // All activities are completed, redirect to Dashboard
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -113,31 +119,35 @@ public class App extends Application  implements Application.ActivityLifecycleCa
                         // All activities are completed, redirect to Dashboard
                         Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        bar.dismiss();
                         startActivity(intent);
 
                     } else {
                         // Not all activities are completed, redirect to the appropriate activity
                         // based on the completion status
                         if (profileCompleted == null || !profileCompleted) {
-
+                            bar.dismiss();
                             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
 
                         } else if (vehicleInfoCompleted == null || !vehicleInfoCompleted) {
+                            bar.dismiss();
                             Intent intent = new Intent(getApplicationContext(), AddVehicalActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
 
                         } else if (documentsCompleted == null || !documentsCompleted) {
+                            bar.dismiss();
                             Intent intent = new Intent(getApplicationContext(), DocumentActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
 
                         } else if (paymentDetailsCompleted == null || !paymentDetailsCompleted) {
+                            bar.dismiss();
                             Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -150,6 +160,8 @@ public class App extends Application  implements Application.ActivityLifecycleCa
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     // Handle any errors
+                    bar.dismiss();
+                    Toast.makeText(App.this, "Check internet connection", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -160,11 +172,15 @@ public class App extends Application  implements Application.ActivityLifecycleCa
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
 
+
+        // Check if the user has completed login and profile
+
     }
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
-
+IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+registerReceiver(networkChangeReceiver,filter);
     }
 
     @Override
@@ -175,7 +191,7 @@ public class App extends Application  implements Application.ActivityLifecycleCa
 
     @Override
     public void onActivityPaused(@NonNull Activity activity) {
-
+        unregisterReceiver(networkChangeReceiver);
     }
 
     @Override

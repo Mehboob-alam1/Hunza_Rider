@@ -3,6 +3,7 @@ package com.mehboob.hunzarider.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.executor.DefaultTaskExecutor;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -22,11 +23,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mehboob.hunzarider.R;
 import com.mehboob.hunzarider.constants.Constants;
@@ -37,7 +42,10 @@ import com.mehboob.hunzarider.fragments.HomeFragment;
 import com.mehboob.hunzarider.fragments.NotificationsFragment;
 import com.mehboob.hunzarider.fragments.WalletFragment;
 import com.mehboob.hunzarider.models.Availability;
+import com.mehboob.hunzarider.models.ProfileDetailsClass;
 import com.mehboob.hunzarider.utils.SharedPref;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -49,6 +57,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     private SharedPref sharedPref;
     private DatabaseReference mRef;
+   private ProfileDetailsClass profileDetailsClass;
+   private CircleImageView imgUserImageBanner;
+   private ImageView imgEditBanner;
+   private TextView txtNameBanner,txtEmailNumberBanner;
+   private String userImageLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +72,12 @@ public class DashboardActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawerLayout);
         sharedPref = new SharedPref(this);
-
+        NavigationView navigationView= (NavigationView) findViewById (R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        imgUserImageBanner= (CircleImageView) header.findViewById(R.id.imgUserImageBanner);
+        imgEditBanner= (ImageView) header.findViewById(R.id.imgEditBanner);
+        txtNameBanner= (TextView) header.findViewById(R.id.txtNameBanner);
+        txtEmailNumberBanner= (TextView) header.findViewById(R.id.txtEmailNumberBanner);
         mRef = FirebaseDatabase.getInstance().getReference(Constants.RIDER).child(Constants.AVAILABILITY);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
@@ -68,8 +86,10 @@ public class DashboardActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new HomeFragment()).commit();
 
         binding.navigationView.setCheckedItem(R.id.nav_home);
-checkAvailability();
+        checkAvailability();
 
+        fetchProfile();
+        fetchUserImage();
         binding.navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_home:
@@ -196,10 +216,11 @@ checkAvailability();
 
     }
 
-private void checkAvailability(){
+    private void checkAvailability() {
 
         binding.appBar.switch1.setChecked(sharedPref.isOnline());
-}
+    }
+
     private void callFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -217,5 +238,59 @@ private void checkAvailability(){
         else
             super.onBackPressed();
         finish();
+    }
+
+
+    private void fetchProfile() {
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+
+        databaseReference.child("Profiles").child(sharedPref.fetchUserId())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                             profileDetailsClass = snapshot.getValue(ProfileDetailsClass.class);
+                            txtNameBanner.setText(profileDetailsClass.getUserName());
+                            txtEmailNumberBanner.setText(profileDetailsClass.getUserEmail() +"\n"+profileDetailsClass.getUserPhoneNumber() + "\n"+profileDetailsClass.getUserAddress());
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void fetchUserImage(){
+
+
+
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(Constants.RIDER);
+        databaseReference.child(Constants.DOCUMENTS)
+                .child(sharedPref.fetchUserId())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()){
+                        userImageLink=    snapshot.child("ImgLink0").getValue(String.class);
+
+                        Glide.with(DashboardActivity.this)
+                                .load(userImageLink)
+                                .placeholder(R.drawable.avatar_placeholder)
+                                .into(imgUserImageBanner);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }
